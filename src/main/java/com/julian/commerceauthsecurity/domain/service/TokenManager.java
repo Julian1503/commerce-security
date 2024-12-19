@@ -1,12 +1,11 @@
 package com.julian.commerceauthsecurity.domain.service;
 
+import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.security.core.Authentication;
-
-import java.util.Map;
-import java.util.function.Consumer;
 
 public interface TokenManager {
     boolean validateToken(String token);
-    String generateToken(Authentication authentication, Consumer<Map<String, Object>> claims);
-
+    String generateToken(Authentication authentication);
+    DecodedJWT  verifyToken(String token);
+    DecodedJWT decodeToken(String token);
 }

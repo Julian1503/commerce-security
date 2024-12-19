@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class Role {
     private final UUID id;
@@ -23,6 +24,17 @@ public class Role {
     Role(String name) {
         this(name, Collections.emptyList());
     }
+
+    public static Role getBasicRole() {
+        return new Role(UUID.fromString("1b952f6c-6edb-47d5-954b-e0f72d5fa4cb"),"USER", List.of());
+    }
+
+    public static List<Role> fromStringArray(String[] roles) {
+        return Stream.of(roles)
+                .map(Role::new)
+                .toList();
+    }
+
 
     public UUID getId() {
         return id;
@@ -45,6 +57,10 @@ public class Role {
         List<Permission> updatedPermissions = new java.util.ArrayList<>(this.permissions);
         updatedPermissions.add(permission);
         return new Role(this.id, this.name, updatedPermissions);
+    }
+
+    public static List<Role> getDefaultRoles() {
+        return List.of(Role.getBasicRole());
     }
 
     @Override

@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 public class UserMapper implements Mapper<User, UserEntity> {
 
     private final Mapper<Role, RoleEntity> roleMapper;
-    private final Mapper<Customer, CustomerEntity> customerMapper;
 
-    public UserMapper(Mapper<Role, RoleEntity> roleMapper, Mapper<Customer, CustomerEntity> customerMapper) {
+    public UserMapper(Mapper<Role, RoleEntity> roleMapper) {
         this.roleMapper = roleMapper;
-        this.customerMapper = customerMapper;
     }
 
     public UserEntity toEntity(User user) {
         if (user == null) throw new IllegalArgumentException("UserMapper.toEntity: User Model cannot be null");
         UserEntity entity = new UserEntity();
         entity.setId(user.getUserId());
+        entity.setAvatar(user.getAvatar());
+        entity.setUsername(user.getUsername());
         entity.setEmail(user.getEmail());
         entity.setPassword(user.getPassword());
         entity.setRoles(user.getRoles().stream().map(roleMapper::toEntity).collect(Collectors.toList()));
@@ -39,9 +39,8 @@ public class UserMapper implements Mapper<User, UserEntity> {
 
         var roles = entity.getRoles().stream().map(roleMapper::toDomainModel).collect(Collectors.toList());
 
-        var customerEntity = entity.getUser();
+        var customerEntity = entity.getCustomer();
 
-        var customer = customerEntity != null ? customerMapper.toDomainModel(customerEntity) : null;
 
         return User.create(
                 entity.getId(),
@@ -50,7 +49,7 @@ public class UserMapper implements Mapper<User, UserEntity> {
                 entity.getPassword(),
                 entity.getEmail(),
                 roles,
-                customer
+                customerEntity != null? customerEntity.getId() : null
         );
     }
 }

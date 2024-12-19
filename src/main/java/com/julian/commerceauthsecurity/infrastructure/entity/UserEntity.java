@@ -15,11 +15,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", nullable = false)
+    @GeneratedValue
+    @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
     private UUID id;
     @Column(name = "avatar")
-    private byte[] avatar;
+    private String avatar;
     @Column(name = "username", nullable = false)
     private String username;
     @Column(name = "password", nullable = false)
@@ -32,21 +32,10 @@ public class UserEntity {
     @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
     private List<RoleEntity> roles;
     @ManyToOne
-    private CustomerEntity user;
+    private CustomerEntity customer;
 
     public UserEntity(String username, List<RoleEntity> roles) {
         this.username = username;
         this.roles = roles;
     }
-//
-//
-//    public void setPassword(String password) {
-//        this.password = SpringCrypto.encrypt(password);
-//    }
-//    public List<String> getRolNames() {
-//        if(!roles.isEmpty()) {
-//            return roles.stream().map(RoleEntity::getName).toList();
-//        }
-//        return new ArrayList<>();
-//    }
 }

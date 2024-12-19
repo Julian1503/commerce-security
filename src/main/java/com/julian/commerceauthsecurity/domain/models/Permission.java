@@ -7,18 +7,20 @@ public class Permission {
   private final UUID id;
   private final String name;
 
-  // Constructor para crear un permiso con un ID (ej., al cargar desde la base de datos)
   Permission(UUID id, String name) {
     this.id = id;
     this.name = name;
   }
 
-  // Constructor para crear un permiso sin ID (ej., al crear nuevos permisos)
   public Permission(String name) {
     this(null, name);
   }
 
-  public UUID getId() {
+    public static Permission getBasicPermission() {
+      return new Permission(UUID.fromString("BASIC_USER"), "BASIC_USER");
+    }
+
+    public UUID getId() {
     return id;
   }
 
@@ -26,7 +28,6 @@ public class Permission {
     return name;
   }
 
-  // Lógica adicional relacionada con permisos podría ir aquí
 
   @Override
   public boolean equals(Object o) {

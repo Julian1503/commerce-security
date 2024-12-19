@@ -1,6 +1,6 @@
 package com.julian.commerceauthsecurity.infrastructure.entity;
 
-import com.nimbusds.openid.connect.sdk.claims.Gender;
+import com.julian.commerceauthsecurity.domain.valueobject.Gender;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,9 +18,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class CustomerEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_person_id_seq")
-    @SequenceGenerator(name = "person_person_id_seq", sequenceName = "person_person_id_seq", allocationSize = 1)
-    @Column(nullable = false, unique = true)
+    @GeneratedValue
+    @Column(name = "customer_id", nullable = false, unique = true, columnDefinition = "UUID")
     private UUID id;
     @Column(name = "name", nullable = false, length = 50)
     private String name;
@@ -29,7 +28,7 @@ public class CustomerEntity {
     @Column(name = "phone_number", length = 15)
     private String phoneNumber;
     @Column(name = "finger_print_data")
-    private Byte[] fingerPrintData;
+    private String fingerPrintData;
     @Column(name = "photo")
     private String photo;
     @Column(name = "street", length = 50)

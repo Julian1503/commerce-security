@@ -1,6 +1,9 @@
-package com.julian.commerceauthsecurity.infrastructure.service;
+package com.julian.commerceauthsecurity.infrastructure.implementation;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.julian.commerceauthsecurity.domain.service.RSAKeyProvider;
 import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceauthsecurity.domain.service.TokenManager;
 import com.julian.commerceauthsecurity.domain.service.UserAuthenticationManager;
@@ -15,18 +18,18 @@ import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Map;
-import java.util.function.Consumer;
 
 public class JwtTokenService implements TokenManager {
 
     private static final Log LOGGER = LogFactory.getLog(JwtTokenService.class);
     private final UserAuthenticationManager userAuthenticationManager;
     private final JwtEncoder encoder;
+    private final RSAKeyProvider rsaKeys;
 
-    public JwtTokenService(UserAuthenticationManager userAuthenticationManager, JwtEncoder encoder) {
+    public JwtTokenService(UserAuthenticationManager userAuthenticationManager, JwtEncoder encoder, RSAKeyProvider rsaKeys) {
         this.userAuthenticationManager = userAuthenticationManager;
         this.encoder = encoder;
+        this.rsaKeys = rsaKeys;
     }
 
 
@@ -42,29 +45,40 @@ public class JwtTokenService implements TokenManager {
     }
 
     @Override
-    public String generateToken(Authentication authentication, Consumer<Map<String, Object>> claims) {
+    public String generateToken(Authentication authentication) {
         Instant now = Instant.now();
         User user = userAuthenticationManager.getUserFromAuthentication(authentication)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         JwtClaimsSet.Builder claimsBuilder = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
-                .expiresAt(now.plus(1, ChronoUnit.HOURS))
+                .expiresAt(now.plus(1, ChronoUnit.DAYS))
                 .subject(authentication.getName())
+                .claim("scid", user.getUserId())
                 .claim("scope", authentication.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority).toList())
                 .claim("email", user.getEmail());
 
-        addClaimIfNotNull(claimsBuilder, "scid", user.getUser() != null ? user.getUser().getId() : null);
-        addClaimIfNotNull(claimsBuilder, "user", user.getUser() != null ? user.getUserId() : null);
-        addClaimIfNotNull(claimsBuilder, "fullName", user.getUser() != null
-                ? user.getUser().getName() + " " + user.getUser().getLastName()
-                : null);
-
-        claims.accept(claimsBuilder.build().getClaims());
-
         return encoder.encode(JwtEncoderParameters.from(claimsBuilder.build())).getTokenValue();
+    }
 
+    @Override
+    public DecodedJWT verifyToken(String token) {
+        DecodedJWT jwt = null;
+
+        try {
+            JWTVerifier verifier = JWT.require(Algorithm.RSA256(rsaKeys.getPublicKey(), rsaKeys.getPrivateKey())).withIssuer(new String[]{"self"}).build();
+            jwt = verifier.verify(token);
+        } catch (Exception var4) {
+            LOGGER.error("Error while verifying authentication token.", var4);
+        }
+
+        return jwt;
+    }
+
+    @Override
+    public DecodedJWT decodeToken(String token) {
+        return JWT.decode(token);
     }
 
     private void addClaimIfNotNull(JwtClaimsSet.Builder builder, String key, Object value) {
@@ -77,16 +91,12 @@ public class JwtTokenService implements TokenManager {
         DecodedJWT jwt = null;
 
         try {
-            jwt = this.decode(token);
+            jwt = this.decodeToken(token);
         } catch (Exception var4) {
             LOGGER.trace("Error getting claims from token: " + var4.getMessage());
         }
 
         return jwt;
-    }
-
-    private DecodedJWT decode(String authToken) {
-        return JWT.decode(authToken);
     }
 
 }

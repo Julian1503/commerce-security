@@ -1,4 +1,4 @@
-package com.julian.commerceauthsecurity.infrastructure.service;
+package com.julian.commerceauthsecurity.infrastructure.implementation;
 
 import com.julian.commerceauthsecurity.domain.service.PasswordEncryptionService;
 import com.julian.commerceshared.security.SpringCrypto;

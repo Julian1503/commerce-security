@@ -1,4 +1,4 @@
-package com.julian.commerceauthsecurity.application.command;
+package com.julian.commerceauthsecurity.application.command.account;
 
 public class LoginCommand {
     private String username;

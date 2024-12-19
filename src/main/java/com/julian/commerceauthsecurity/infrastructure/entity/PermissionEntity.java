@@ -13,9 +13,9 @@ import java.util.UUID;
 @Table(name = "permissions")
 public class PermissionEntity {
     @jakarta.persistence.Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "permission_id")
-    private UUID Id;
+    @GeneratedValue
+    @Column(name = "permission_id", columnDefinition = "UUID")
+    private UUID id;
 
     @Column(name = "permission_name")
     private String name;

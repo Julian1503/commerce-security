@@ -1,6 +1,6 @@
 package com.julian.commerceauthsecurity.domain.models;
 
-import com.nimbusds.openid.connect.sdk.claims.Gender;
+import com.julian.commerceauthsecurity.domain.valueobject.Gender;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import java.util.Date;
@@ -12,7 +12,7 @@ public class Customer extends AbstractAggregateRoot<Customer> {
     private final String name;
     private final String lastName;
     private final String phoneNumber;
-    private final Byte[] fingerPrintData;
+    private final String fingerPrintData;
     private final String photo;
     private final String street;
     private final String houseNumber;
@@ -27,7 +27,7 @@ public class Customer extends AbstractAggregateRoot<Customer> {
             String name,
             String lastName,
             String phoneNumber,
-            Byte[] fingerPrintData,
+            String fingerPrintData,
             String photo,
             String street,
             String houseNumber,
@@ -57,7 +57,7 @@ public class Customer extends AbstractAggregateRoot<Customer> {
             String name,
             String lastName,
             String phoneNumber,
-            Byte[] fingerPrintData,
+            String fingerPrintData,
             String photo,
             String street,
             String houseNumber,
@@ -112,7 +112,7 @@ public class Customer extends AbstractAggregateRoot<Customer> {
         return phoneNumber;
     }
 
-    public Byte[] getFingerPrintData() {
+    public String getFingerPrintData() {
         return fingerPrintData;
     }
 
