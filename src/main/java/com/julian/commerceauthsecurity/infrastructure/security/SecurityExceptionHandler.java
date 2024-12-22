@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.julian.commerceshared.api.response.BaseResponse;
 import com.julian.commerceshared.dto.ErrorMessage;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -12,7 +13,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.sql.SQLException;
 import java.nio.file.AccessDeniedException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,6 +32,21 @@ public class SecurityExceptionHandler {
   public ResponseEntity<ErrorMessage> handleAccessDeniedException(AccessDeniedException ex) {
     return buildErrorResponse("No permissions", HttpStatus.FORBIDDEN, "Access denied");
   }
+
+  @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+  public ResponseEntity<ErrorMessage> handleMethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException ex) {
+    return buildErrorResponse("Method Argument Type Mismatch", HttpStatus.BAD_REQUEST, ex.getMessage());
+  }
+
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<ErrorMessage> handleIllegalArgumentException(IllegalArgumentException ex) {
+      return buildErrorResponse("Illegal Argument", HttpStatus.BAD_REQUEST, ex.getMessage());
+  }
+
+  @ExceptionHandler({SQLException.class, DataAccessException.class})
+    public ResponseEntity<ErrorMessage> handleDatabaseException(Exception ex) {
+        return buildErrorResponse("Fatal error", HttpStatus.INTERNAL_SERVER_ERROR, "Please try again later");
+    }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<BaseResponse> handleValidationException(MethodArgumentNotValidException ex) {

@@ -1,47 +1,42 @@
 package com.julian.commerceauthsecurity.domain.models;
 
+import com.julian.commerceauthsecurity.domain.valueobject.Name;
+import lombok.Getter;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Stream;
 
+@Getter
 public class Role {
     private final UUID id;
-    private final String name;
+    private final Name name;
     private final List<Permission> permissions;
 
-    Role(UUID id, String name, List<Permission> permissions) {
+    Role(UUID id, Name name, List<Permission> permissions) {
         this.id = id;
         this.name = name;
         this.permissions = permissions != null ? permissions : Collections.emptyList();
     }
 
-    Role(String name, List<Permission> permissions) {
+    Role(Name name, List<Permission> permissions) {
         this(null, name, permissions);
     }
 
-    Role(String name) {
+    Role(Name name) {
         this(name, Collections.emptyList());
     }
 
     public static Role getBasicRole() {
-        return new Role(UUID.fromString("1b952f6c-6edb-47d5-954b-e0f72d5fa4cb"),"USER", List.of());
+        return new Role(UUID.fromString("1b952f6c-6edb-47d5-954b-e0f72d5fa4cb"),Name.create("USER"), List.of());
     }
 
     public static List<Role> fromStringArray(String[] roles) {
         return Stream.of(roles)
-                .map(Role::new)
+                .map(role -> new Role(Name.create(role)))
                 .toList();
-    }
-
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
     }
 
     public List<Permission> getPermissions() {
@@ -50,7 +45,7 @@ public class Role {
 
     public boolean hasPermission(String permissionName) {
         return permissions.stream()
-                .anyMatch(permission -> permission.getName().equalsIgnoreCase(permissionName));
+                .anyMatch(permission -> permission.getName().sameValueAs(permissionName));
     }
 
     public Role addPermission(Permission permission) {
@@ -85,7 +80,7 @@ public class Role {
                 '}';
     }
 
-    public static Role create(UUID id, String name, List<Permission> permissions) {
+    public static Role create(UUID id, Name name, List<Permission> permissions) {
         return new Role(id, name, permissions);
     }
 }

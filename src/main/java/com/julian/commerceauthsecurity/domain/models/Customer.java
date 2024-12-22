@@ -1,38 +1,37 @@
 package com.julian.commerceauthsecurity.domain.models;
 
+import com.julian.commerceauthsecurity.domain.valueobject.Address;
 import com.julian.commerceauthsecurity.domain.valueobject.Gender;
+import com.julian.commerceauthsecurity.domain.valueobject.Name;
+import com.julian.commerceauthsecurity.domain.valueobject.PhoneNumber;
+import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
 import java.util.Date;
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
 public class Customer extends AbstractAggregateRoot<Customer> {
     private final UUID id;
-    private final String name;
-    private final String lastName;
-    private final String phoneNumber;
+    private final Name name;
+    private final Name lastName;
+    private final PhoneNumber phoneNumber;
     private final String fingerPrintData;
     private final String photo;
-    private final String street;
-    private final String houseNumber;
-    private final String floor;
-    private final String door;
+    private final Address address;
     private final Gender gender;
     private final Date birthDate;
     private final UUID userId;
 
     private Customer(
             UUID id,
-            String name,
-            String lastName,
-            String phoneNumber,
+            Name name,
+            Name lastName,
+            PhoneNumber phoneNumber,
             String fingerPrintData,
             String photo,
-            String street,
-            String houseNumber,
-            String floor,
-            String door,
+            Address address,
             Gender gender,
             Date birthDate,
             UUID userId
@@ -43,10 +42,7 @@ public class Customer extends AbstractAggregateRoot<Customer> {
         this.phoneNumber = phoneNumber;
         this.fingerPrintData = fingerPrintData;
         this.photo = photo;
-        this.street = street;
-        this.houseNumber = houseNumber;
-        this.floor = floor;
-        this.door = door;
+        this.address = address;
         this.gender = gender;
         this.birthDate = birthDate;
         this.userId = userId;
@@ -59,10 +55,7 @@ public class Customer extends AbstractAggregateRoot<Customer> {
             String phoneNumber,
             String fingerPrintData,
             String photo,
-            String street,
-            String houseNumber,
-            String floor,
-            String door,
+            Address address,
             Gender gender,
             Date birthDate,
             UUID userId
@@ -81,75 +74,16 @@ public class Customer extends AbstractAggregateRoot<Customer> {
         }
         return new Customer(
                 id == null ? UUID.randomUUID() : id,
-                name,
-                lastName,
-                phoneNumber,
+                Name.create(name),
+                Name.create(lastName),
+                PhoneNumber.create(phoneNumber),
                 fingerPrintData,
                 photo,
-                street,
-                houseNumber,
-                floor,
-                door,
+                address,
                 gender,
                 birthDate,
                 userId
         );
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public String getFingerPrintData() {
-        return fingerPrintData;
-    }
-
-    public String getPhoto() {
-        return photo;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public String getHouseNumber() {
-        return houseNumber;
-    }
-
-    public String getFloor() {
-        return floor;
-    }
-
-    public String getDoor() {
-        return door;
-    }
-
-    public Gender getGender() {
-        return gender;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void customerRegistration() {
-
     }
 
     @Override

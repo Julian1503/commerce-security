@@ -1,18 +1,18 @@
 package com.julian.commerceauthsecurity.domain.valueobject;
 
-public class Avatar {
-    private String image;
+import com.julian.commerceshared.valueobject.AbstractValueObject;
 
-    public Avatar(String image) {
-        this.image = image;
+public class Avatar extends AbstractValueObject<String> {
+
+    private Avatar(String value) {
+        super(value);
     }
 
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
+    public static Avatar create(String value) {
+        if (value == null || value.isEmpty()) {
+            throw new IllegalArgumentException("Avatar cannot be null or empty");
+        }
+        return new Avatar(value);
     }
 
     public static String getDefaultAvatar() {

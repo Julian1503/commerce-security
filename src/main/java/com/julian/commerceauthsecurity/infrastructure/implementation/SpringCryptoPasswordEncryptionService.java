@@ -19,7 +19,7 @@ public class SpringCryptoPasswordEncryptionService implements PasswordEncryption
     }
     @Override
     public boolean matches(String rawPassword, String encryptedPassword) {
-        String encrypted = SpringCrypto.encrypt(rawPassword);
-        return encrypted.equals(encryptedPassword);
+        String decryptedPassword = SpringCrypto.decrypt(encryptedPassword);
+        return rawPassword.equals(decryptedPassword);
     }
 }

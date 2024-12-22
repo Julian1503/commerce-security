@@ -4,6 +4,7 @@ import com.julian.commerceauthsecurity.application.command.user.ChangePasswordCo
 import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceauthsecurity.domain.repository.UserRepository;
 import com.julian.commerceauthsecurity.domain.service.PasswordEncryptionService;
+import com.julian.commerceauthsecurity.domain.valueobject.Password;
 import com.julian.commerceshared.repository.UseCase;
 
 import java.util.Optional;
@@ -23,11 +24,19 @@ public class ChangeUserPasswordUseCase implements UseCase<ChangePasswordCommand,
         if (!userOptional.isPresent()) {
             return false;
         }
+
         User user = userOptional.get();
-        boolean isChangePasswordSuccessful = user.changePassword(command.getOldPassword(), command.getNewPassword(), passwordEncryptionService);
-        if (isChangePasswordSuccessful) {
-            userRepository.save(user);
+        if (!passwordEncryptionService.matches(command.getOldPassword(), user.getPassword().getValue())) {
+            throw new IllegalArgumentException("Old password is incorrect");
         }
-        return isChangePasswordSuccessful;
+
+        if(Password.isValidFormat(command.getNewPassword())) {
+            throw new IllegalArgumentException("New password is with an invalid format");
+        }
+
+        String encryptedNewPassword = passwordEncryptionService.encrypt(command.getNewPassword());
+        user.changePassword(encryptedNewPassword);
+        userRepository.save(user);
+        return true;
     }
 }

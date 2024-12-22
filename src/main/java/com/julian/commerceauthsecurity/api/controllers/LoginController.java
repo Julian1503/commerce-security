@@ -1,7 +1,6 @@
 package com.julian.commerceauthsecurity.api.controllers;
 
 import com.julian.commerceauthsecurity.application.command.account.LoginCommand;
-import com.julian.commerceauthsecurity.application.useCase.account.LoginUseCase;
 import com.julian.commerceshared.api.controllers.BaseController;
 import com.julian.commerceshared.api.response.BaseResponse;
 import com.julian.commerceshared.dto.AuthDto;
