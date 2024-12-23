@@ -20,21 +20,21 @@ public class ChangeUserPasswordUseCase implements UseCase<ChangePasswordCommand,
 
     @Override
     public Boolean execute(ChangePasswordCommand command) {
-        Optional<User> userOptional = userRepository.findByUsername(command.getUsername());
-        if (!userOptional.isPresent()) {
+        Optional<User> userOptional = userRepository.findByUsername(command.username());
+        if (userOptional.isEmpty()) {
             return false;
         }
 
         User user = userOptional.get();
-        if (!passwordEncryptionService.matches(command.getOldPassword(), user.getPassword().getValue())) {
+        if (!passwordEncryptionService.matches(command.oldPassword(), user.getPassword().getValue())) {
             throw new IllegalArgumentException("Old password is incorrect");
         }
 
-        if(Password.isValidFormat(command.getNewPassword())) {
+        if(Password.isValidFormat(command.newPassword())) {
             throw new IllegalArgumentException("New password is with an invalid format");
         }
 
-        String encryptedNewPassword = passwordEncryptionService.encrypt(command.getNewPassword());
+        String encryptedNewPassword = passwordEncryptionService.encrypt(command.newPassword());
         user.changePassword(encryptedNewPassword);
         userRepository.save(user);
         return true;

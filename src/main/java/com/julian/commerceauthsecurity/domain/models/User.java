@@ -22,12 +22,11 @@ public class User extends AbstractAggregateRoot<User> {
   private final boolean active = true;
   private final UUID customerId;
 
-  User(UUID userId, String avatar, String username, String password, String email, List<Role> roles, UUID customerId) {
+  User(UUID userId, Avatar avatar, Username username, Password password, Email email, List<Role> roles, UUID customerId) {
     this.userId = userId;
-    this.avatar = Avatar.create(avatar);
-    this.username = Username.create(username);
-    this.password = Password.create(password);
-    this.email = Email.create(email);
+    this.avatar = avatar;
+    this.username = username;
+    this.email = email;
     this.roles = roles != null ? new ArrayList<>(roles) : new ArrayList<>();
     this.customerId = customerId;
   }
@@ -36,11 +35,15 @@ public class User extends AbstractAggregateRoot<User> {
     this.password = Password.create(encryptedPassword);
   }
 
-  public static User create(UUID userId, String avatar, String username, String password, String email, List<Role> roles, UUID customerId) {
+  public static User create(UUID userId, Avatar avatar, Username username, Password password, Email email, List<Role> roles, UUID customerId) {
     if(roles == null || roles.isEmpty()) {
       throw new IllegalArgumentException("Roles cannot be null or empty");
     }
     return new User(userId, avatar, username, password, email, roles, customerId);
+  }
+
+  public User update(Avatar avatar, Username username, Email email) {
+    return new User(this.userId, avatar, username, this.password, email, this.roles, this.customerId);
   }
 
 
@@ -55,5 +58,11 @@ public class User extends AbstractAggregateRoot<User> {
   @Override
   public int hashCode() {
     return Objects.hash(userId);
+  }
+
+  public User assignRoles(Collection<Role> roles) {
+    List<Role> totalRoles = new ArrayList<>(this.roles);
+    totalRoles.addAll(roles);
+    return new User(this.userId, this.avatar, this.username, this.password, this.email, totalRoles, this.customerId);
   }
 }

@@ -1,8 +1,8 @@
 package com.julian.commerceauthsecurity.domain.repository;
 
-import com.julian.commerceauthsecurity.application.query.GetUsersWithFilterQuery;
 import com.julian.commerceauthsecurity.domain.models.User;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import java.time.LocalDate;
@@ -15,5 +15,6 @@ public interface UserRepository {
     UUID save(User user);
     boolean existsByUsername(String username);
     Optional<User> findById(UUID id);
-    Collection<User> findAllWithFilter(String username, String email, String role, Boolean active, LocalDate createdAfter, LocalDate createdBefore, Pageable pagination);
+    Page<User> findAllWithFilter(String username, String email, Collection<String> role, Boolean active, LocalDate createdAfter, LocalDate createdBefore, Pageable pagination);
+    void delete(UUID id);
 }

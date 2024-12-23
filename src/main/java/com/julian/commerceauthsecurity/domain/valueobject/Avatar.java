@@ -15,7 +15,7 @@ public class Avatar extends AbstractValueObject<String> {
         return new Avatar(value);
     }
 
-    public static String getDefaultAvatar() {
-        return "https://www.gravatar.com/avatar/";
+    public static Avatar getDefaultAvatar() {
+        return new Avatar("https://www.gravatar.com/avatar/");
     }
 }

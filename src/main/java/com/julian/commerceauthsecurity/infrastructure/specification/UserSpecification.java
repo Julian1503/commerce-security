@@ -1,33 +1,34 @@
 package com.julian.commerceauthsecurity.infrastructure.specification;
 
 import com.julian.commerceauthsecurity.infrastructure.entity.UserEntity;
-import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 
 public class UserSpecification {
-    public static Specification<UserEntity> Filters(String username, String email, String role, Boolean active,
-                                                        LocalDate createdAfter, LocalDate createdBefore) {
-        return (root, query, criteriaBuilder) -> {
-            List<Predicate> predicates = new ArrayList<>();
-            if (username != null) {
-                predicates.add(criteriaBuilder.like(
-                        criteriaBuilder.lower(root.get("username")), "%" + username.toLowerCase() + "%"
-                ));            }
-            if (email != null) {
-                predicates.add(criteriaBuilder.like(
-                        criteriaBuilder.lower(root.get("email")), "%" + email.toLowerCase() + "%"
-                ));            }
-            if (role != null) {
-                predicates.add(criteriaBuilder.equal(root.get("role"), role));
-            }
-            if (active != null) {
-                predicates.add(criteriaBuilder.equal(root.get("active"), active));
-            }
-            return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
-        };
+
+    public static Specification<UserEntity> hasUsername(String username) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("username"), username);
+    }
+
+    public static Specification<UserEntity> hasEmail(String email) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"), email);
+    }
+
+    public static Specification<UserEntity> hasRoles(Collection<String> roleNames) {
+        return (root, query, criteriaBuilder) ->root.join("roles").get("name").in(roleNames);
+    }
+
+    public static Specification<UserEntity> isActive(Boolean active) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("active"), active);
+    }
+
+    public static Specification<UserEntity> createdAfter(LocalDate createdAfter) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("createdAt"), createdAfter);
+    }
+
+    public static Specification<UserEntity> createdBefore(LocalDate createdBefore) {
+        return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), createdBefore);
     }
 }

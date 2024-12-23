@@ -6,6 +6,7 @@ import com.julian.commerceauthsecurity.infrastructure.entity.UserEntity;
 import com.julian.commerceauthsecurity.infrastructure.repository.UserJpaRepository;
 import com.julian.commerceauthsecurity.infrastructure.specification.UserSpecification;
 import com.julian.commerceshared.repository.Mapper;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -47,12 +48,19 @@ public class UserJpaRepositoryAdapter implements UserRepository {
     }
 
     @Override
-    public Collection<User> findAllWithFilter(String username, String email, String role, Boolean active, LocalDate createdAfter, LocalDate createdBefore, Pageable pagination) {
-        Specification<UserEntity> spec = UserSpecification.Filters(username, email, role, active, createdAfter, createdBefore);
-        return userJpaRepository.
-                findAll(spec, pagination)
-                .stream()
-                .map(userMapper::toTarget)
-                .toList();
+    public Page<User> findAllWithFilter(String username, String email, Collection<String> roleNames, Boolean active, LocalDate createdAfter, LocalDate createdBefore, Pageable pagination) {
+        Specification<UserEntity> spec = UserSpecification.hasUsername(username)
+                .and(UserSpecification.hasEmail(email))
+                .and(UserSpecification.hasRoles(roleNames))
+                .and(UserSpecification.isActive(active))
+                .and(UserSpecification.createdAfter(createdAfter))
+                .and(UserSpecification.createdBefore(createdBefore));
+        Page<UserEntity> userEntities = userJpaRepository.findAll(spec, pagination);
+        return userEntities.map(userMapper::toTarget);
+    }
+
+    @Override
+    public void delete(UUID id) {
+        userJpaRepository.deleteById(id);
     }
 }

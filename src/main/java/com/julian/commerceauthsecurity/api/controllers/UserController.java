@@ -2,9 +2,9 @@ package com.julian.commerceauthsecurity.api.controllers;
 
 import com.julian.commerceauthsecurity.api.response.UserResponse;
 import com.julian.commerceauthsecurity.application.command.user.ChangePasswordCommand;
-import com.julian.commerceauthsecurity.application.command.user.CreateUserCommand;
-import com.julian.commerceauthsecurity.application.query.GetUserByIdQuery;
-import com.julian.commerceauthsecurity.application.query.GetUsersWithFilterQuery;
+import com.julian.commerceauthsecurity.application.command.user.CreateBasicUserCommand;
+import com.julian.commerceauthsecurity.application.query.user.GetUserByIdQuery;
+import com.julian.commerceauthsecurity.application.query.user.GetUsersWithFilterQuery;
 import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceshared.api.controllers.BaseController;
 import com.julian.commerceshared.api.response.BaseResponse;
@@ -25,13 +25,13 @@ import java.util.UUID;
 @RequestMapping("/api/user")
 public class UserController extends BaseController {
 
-    private final UseCase<CreateUserCommand, UUID> createUserUseCase;
+    private final UseCase<CreateBasicUserCommand, UUID> createUserUseCase;
     private final UseCase<ChangePasswordCommand, Boolean> changePasswordUseCase;
     private final UseCase<GetUserByIdQuery, User> getUserByIdUseCase;
     private final UseCase<GetUsersWithFilterQuery, Collection<User>> getUserWithFilterUseCase;
     private final Mapper<User, UserResponse> userMapper;
 
-    public UserController(UseCase<CreateUserCommand, UUID> createUserUseCase,
+    public UserController(UseCase<CreateBasicUserCommand, UUID> createUserUseCase,
                           UseCase<ChangePasswordCommand, Boolean> changePasswordUseCase,
                           UseCase<GetUserByIdQuery, User> getUserByIdUseCase,
                           UseCase<GetUsersWithFilterQuery, Collection<User>> getUserWithFilterUseCase,
@@ -44,10 +44,10 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/create-basic-user")
-    public ResponseEntity<BaseResponse> createBasicUser(@Validated @RequestBody CreateUserCommand createUserCommand) {
+    public ResponseEntity<BaseResponse> createBasicUser(@Validated @RequestBody CreateBasicUserCommand createBasicUserCommand) {
         ResponseEntity<BaseResponse> baseResponse;
         try {
-            UUID userId = createUserUseCase.execute(createUserCommand);
+            UUID userId = createUserUseCase.execute(createBasicUserCommand);
             baseResponse = createSuccessResponse(userId, "User was created successfully");
         } catch (Exception e) {
             baseResponse = createErrorResponse(e.getMessage(), HttpStatus.BAD_REQUEST);

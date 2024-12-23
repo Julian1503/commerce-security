@@ -39,4 +39,7 @@ public class Permission {
     return new Permission(id, name);
   }
 
+    public Permission update(Name name) {
+      return new Permission(this.id, name);
+    }
 }
