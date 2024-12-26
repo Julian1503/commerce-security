@@ -9,12 +9,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import com.julian.commerceauthsecurity.infrastructure.repository.PermissionJpaRepository;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class PermissionJpaRepositoryAdapter implements PermissionRepository {
 
     private final PermissionJpaRepository permissionJpaRepository;
@@ -46,12 +48,22 @@ public class PermissionJpaRepositoryAdapter implements PermissionRepository {
 
     @Override
     public Collection<Permission> findAllByIds(Collection<UUID> uuids) {
-        List<PermissionEntity> permissionEntities = permissionJpaRepository.findAllById(uuids);
+        Collection<PermissionEntity> permissionEntities = permissionJpaRepository.findAllById(uuids);
         return permissionEntities.stream().map(permissionMapper::toTarget).toList();
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        return permissionJpaRepository.existsByName(name);
     }
 
     @Override
     public void deleteById(UUID id) {
         permissionJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsById(UUID id) {
+        return permissionJpaRepository.existsById(id);
     }
 }

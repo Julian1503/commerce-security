@@ -1,6 +1,6 @@
 package com.julian.commerceauthsecurity.infrastructure.security;
 
-import com.julian.commerceauthsecurity.domain.repository.UserRepository;
+import com.julian.commerceauthsecurity.domain.service.SecurityContextInterface;
 import com.julian.commerceauthsecurity.domain.service.TokenManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,18 +11,17 @@ import com.julian.commerceauthsecurity.domain.service.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SecurityContext {
+public class SecurityContext implements SecurityContextInterface {
   private final Logger LOGGER = LoggerFactory.getLogger(SecurityContext.class);
   private final TokenManager tokenManager;
   private final UserDetailsService userDetailsService;
-  private final UserRepository userRepository;
 
-    public SecurityContext(TokenManager tokenManager, UserDetailsService userDetailsService, UserRepository userRepository) {
+    public SecurityContext(TokenManager tokenManager, UserDetailsService userDetailsService) {
         this.tokenManager = tokenManager;
         this.userDetailsService = userDetailsService;
-        this.userRepository = userRepository;
     }
 
+    @Override
     public void addTokenToSecurityContext(final String token) {
     if (this.tokenManager.validateToken(token)) {
       this.setSecurityContext(token);

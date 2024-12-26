@@ -1,25 +1,24 @@
 package com.julian.commerceauthsecurity.domain.models;
 
-import com.julian.commerceauthsecurity.domain.valueobject.Name;
+import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import lombok.Getter;
 
 import java.util.*;
-import java.util.stream.Stream;
 
 @Getter
 public class Role {
     private final UUID id;
-    private final Name name;
-    private final List<Permission> permissions;
+    private final SecurityName name;
+    private final Collection<Permission> permissions;
 
-    Role(UUID id, Name name, List<Permission> permissions) {
+    Role(UUID id, SecurityName name, Collection<Permission> permissions) {
         this.id = id;
         this.name = name;
         this.permissions = permissions != null ? permissions : Collections.emptyList();
     }
 
     public static Role getBasicRole() {
-        return new Role(UUID.fromString("1b952f6c-6edb-47d5-954b-e0f72d5fa4cb"),Name.create("USER"), List.of());
+        return new Role(UUID.fromString("1b952f6c-6edb-47d5-954b-e0f72d5fa4cb"),SecurityName.create("USER"), List.of());
     }
 
     public boolean hasPermission(String permissionName) {
@@ -28,12 +27,12 @@ public class Role {
     }
 
     public Role addPermission(Permission permission) {
-        List<Permission> updatedPermissions = new java.util.ArrayList<>(this.permissions);
+        Collection<Permission> updatedPermissions = new ArrayList<>(this.permissions);
         updatedPermissions.add(permission);
         return new Role(this.id, this.name, updatedPermissions);
     }
 
-    public static List<Role> getDefaultRoles() {
+    public static Collection<Role> getDefaultRoles() {
         return List.of(Role.getBasicRole());
     }
 
@@ -59,16 +58,16 @@ public class Role {
                 '}';
     }
 
-    public static Role create(UUID id, Name name, List<Permission> permissions) {
+    public static Role create(UUID id, SecurityName name, Collection<Permission> permissions) {
         return new Role(id, name, permissions);
     }
 
-    public Role update(Name name) {
+    public Role update(SecurityName name) {
         return new Role(this.id, name, this.permissions);
     }
 
     public Role assignPermissions(Collection<Permission> existingPermissions) {
-        List<Permission> permissions = new ArrayList<>(this.permissions);
+        Collection<Permission> permissions = new ArrayList<>(this.permissions);
         permissions.addAll(existingPermissions);
         return new Role(this.id, this.name, permissions);
     }

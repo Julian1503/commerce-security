@@ -3,10 +3,13 @@ package com.julian.commerceauthsecurity.infrastructure.mapper;
 import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.valueobject.Name;
+import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceauthsecurity.infrastructure.entity.PermissionEntity;
 import com.julian.commerceauthsecurity.infrastructure.entity.RoleEntity;
 import com.julian.commerceshared.repository.Mapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class RoleMapper implements Mapper<Role, RoleEntity> {
 
     private final Mapper<Permission, PermissionEntity> permissionMapper;
@@ -26,6 +29,6 @@ public class RoleMapper implements Mapper<Role, RoleEntity> {
     public Role toTarget(RoleEntity entity) {
         if (entity == null) throw new IllegalArgumentException("RoleMapper.toTarget: Role Entity cannot be null");
         var permission = entity.getPermissions().stream().map(permissionMapper::toTarget).toList();
-        return Role.create(entity.getId(), Name.create(entity.getName()), permission);
+        return Role.create(entity.getId(), SecurityName.create(entity.getName()), permission);
     }
 }

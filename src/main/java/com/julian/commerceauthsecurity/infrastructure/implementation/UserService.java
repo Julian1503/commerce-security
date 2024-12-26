@@ -5,9 +5,11 @@ import com.julian.commerceauthsecurity.domain.repository.UserRepository;
 import com.julian.commerceauthsecurity.domain.service.UserAuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserService implements UserAuthenticationManager {
     private final UserRepository userRepository;
 

@@ -12,12 +12,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collection;
 
 import static java.util.Arrays.stream;
 
+@Service
 public class LoadUserDetailService implements UserDetailsService {
     private final Logger LOGGER = LogManager.getLogger(LoadUserDetailService.class);
     private final UserJpaRepository userRepository;

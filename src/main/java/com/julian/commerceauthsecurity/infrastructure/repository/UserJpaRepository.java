@@ -17,6 +17,5 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, UUID>, JpaS
   boolean existsByUsername(String username);
   boolean existsByEmail(String email);
 
-  @Cacheable(value = "usersCache")
-  Page<UserEntity>findAll(Specification<UserEntity> spec, Pageable pageable);
+  Page<UserEntity> findAll(Specification<UserEntity> spec, Pageable pageable);
 }

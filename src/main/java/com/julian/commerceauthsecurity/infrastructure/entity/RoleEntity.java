@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.UUID;
 
 @Entity
@@ -23,7 +23,7 @@ public class RoleEntity {
 
     @OneToMany
     @JoinTable(name="role_permission", joinColumns = @JoinColumn(name="role_id"), inverseJoinColumns = @JoinColumn(name="permission_id"))
-    private List<PermissionEntity> permissions;
+    private Collection<PermissionEntity> permissions;
 
     public RoleEntity(String name) { this.name = name; }
 }

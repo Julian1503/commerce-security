@@ -8,11 +8,12 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-import java.util.List;
+import java.util.Collection;
 import java.util.UUID;
 
 public interface RolesJpaRepository extends JpaRepository<RoleEntity, UUID>, JpaSpecificationExecutor<RoleEntity> {
-  List<RoleEntity> findAllByNameIn(List<String> names);
+  Collection<RoleEntity> findAllByNameIn(Collection<String> names);
   @Cacheable("roles")
   Page<RoleEntity> findAll(Specification<RoleEntity> specification, Pageable pageable);
+  boolean existsByName(String name);
 }

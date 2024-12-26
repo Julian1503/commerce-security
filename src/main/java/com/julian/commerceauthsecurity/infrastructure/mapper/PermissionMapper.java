@@ -2,9 +2,12 @@ package com.julian.commerceauthsecurity.infrastructure.mapper;
 
 import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.valueobject.Name;
+import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceauthsecurity.infrastructure.entity.PermissionEntity;
 import com.julian.commerceshared.repository.Mapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PermissionMapper implements Mapper<Permission, PermissionEntity> {
 
     public PermissionEntity toSource(Permission permission) {
@@ -17,6 +20,6 @@ public class PermissionMapper implements Mapper<Permission, PermissionEntity> {
 
     public Permission toTarget(PermissionEntity entity) {
         if (entity == null) throw new IllegalArgumentException("PermissionMapper.toTarget: Permission Entity cannot be null");
-        return Permission.create(entity.getId(), Name.create(entity.getName()));
+        return Permission.create(entity.getId(), SecurityName.create(entity.getName()));
     }
 }

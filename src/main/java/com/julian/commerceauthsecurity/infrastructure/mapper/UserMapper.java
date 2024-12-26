@@ -2,12 +2,18 @@ package com.julian.commerceauthsecurity.infrastructure.mapper;
 
 import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceauthsecurity.domain.models.Role;
+import com.julian.commerceauthsecurity.domain.valueobject.Avatar;
+import com.julian.commerceauthsecurity.domain.valueobject.Email;
+import com.julian.commerceauthsecurity.domain.valueobject.Password;
+import com.julian.commerceauthsecurity.domain.valueobject.Username;
 import com.julian.commerceauthsecurity.infrastructure.entity.RoleEntity;
 import com.julian.commerceauthsecurity.infrastructure.entity.UserEntity;
 import com.julian.commerceshared.repository.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
 
+@Component
 public class UserMapper implements Mapper<User, UserEntity> {
 
     private final Mapper<Role, RoleEntity> roleMapper;
@@ -40,10 +46,10 @@ public class UserMapper implements Mapper<User, UserEntity> {
 
         return User.create(
                 entity.getId(),
-                entity.getAvatar(),
-                entity.getUsername(),
-                entity.getPassword(),
-                entity.getEmail(),
+                Avatar.create(entity.getAvatar()),
+                Username.create(entity.getUsername()),
+                Password.create(entity.getPassword()),
+                Email.create(entity.getEmail()),
                 roles,
                 customerEntity != null? customerEntity.getId() : null
         );

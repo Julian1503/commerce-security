@@ -13,5 +13,7 @@ public interface PermissionRepository {
     Optional<Permission> findById(UUID id);
     Page<Permission> findAll(String name, Pageable pageable);
     Collection<Permission> findAllByIds(Collection<UUID> uuids);
+    boolean existsByName(String name);
     void deleteById(UUID id);
+    boolean existsById(UUID id);
 }

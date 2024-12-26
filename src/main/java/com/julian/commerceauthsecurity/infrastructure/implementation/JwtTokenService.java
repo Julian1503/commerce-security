@@ -15,10 +15,12 @@ import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+@Service
 public class JwtTokenService implements TokenManager {
 
     private static final Log LOGGER = LogFactory.getLog(JwtTokenService.class);

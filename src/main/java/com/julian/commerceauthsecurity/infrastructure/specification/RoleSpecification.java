@@ -11,24 +11,21 @@ import java.util.UUID;
 
 public class RoleSpecification {
     public static Specification<RoleEntity> hasName(String name) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("name"), name);
-    }
-
-    public static Specification<RoleEntity> hasId(UUID id) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("id"), id);
-    }
-
-    public static Specification<RoleEntity> hasPermissionId(UUID permissionId) {
         return (root, query, criteriaBuilder) -> {
-            Join<Role, Permission> join = root.join("permissions");
-            return criteriaBuilder.equal(join.get("id"), permissionId);
+            if (name == null || name.isEmpty()) {
+                return criteriaBuilder.conjunction();
+            }
+            return criteriaBuilder.equal(root.get("name"), name);
         };
     }
 
-    public static Specification<RoleEntity> hasPermissionsName(Collection<String> permissionsName) {
+    public static Specification<RoleEntity> hasPermissions(Collection<UUID> permissionsId) {
         return (root, query, criteriaBuilder) -> {
+            if (permissionsId == null || permissionsId.isEmpty()) {
+                return criteriaBuilder.conjunction();
+            }
             Join<Role, Permission> join = root.join("permissions");
-            return join.get("name").in(permissionsName);
+            return join.get("id").in(permissionsId);
         };
     }
 }

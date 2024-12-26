@@ -19,12 +19,8 @@ public class UpdateUserUseCase implements UseCase<UpdateUserCommand, User> {
 
     @Override
     public User execute(UpdateUserCommand command) {
-        Optional<User> user = userRepository.findById(command.id());
-        if (user.isEmpty()) {
-            throw new IllegalArgumentException("User not found");
-        }
-        User userToUpdate = user.get();
-        User userUpdated = userToUpdate.update(Avatar.create(command.avatar()), Username.create(command.username()), Email.create(command.email()));
+        User user = userRepository.findById(command.id()).orElseThrow(() -> new IllegalArgumentException("User not found"));
+        User userUpdated = user.update(Avatar.create(command.avatar()), Username.create(command.username()), Email.create(command.email()));
         userRepository.save(userUpdated);
         return userUpdated;
     }

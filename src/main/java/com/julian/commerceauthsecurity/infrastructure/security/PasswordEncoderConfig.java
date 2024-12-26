@@ -2,7 +2,9 @@ package com.julian.commerceauthsecurity.infrastructure.security;
 
 import com.julian.commerceshared.security.SpringCrypto;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Component;
 
+@Component
 public class PasswordEncoderConfig implements PasswordEncoder {
 
   @Override

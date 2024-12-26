@@ -1,7 +1,5 @@
 package com.julian.commerceauthsecurity.domain.models;
 
-import com.julian.commerceauthsecurity.domain.repository.UserRepository;
-import com.julian.commerceauthsecurity.domain.service.PasswordEncryptionService;
 import com.julian.commerceauthsecurity.domain.valueobject.Avatar;
 import com.julian.commerceauthsecurity.domain.valueobject.Email;
 import com.julian.commerceauthsecurity.domain.valueobject.Password;
@@ -18,11 +16,11 @@ public class User extends AbstractAggregateRoot<User> {
   private final Username username;
   private Password password;
   private final Email email;
-  private final List<Role> roles;
+  private final Collection<Role> roles;
   private final boolean active = true;
   private final UUID customerId;
 
-  User(UUID userId, Avatar avatar, Username username, Password password, Email email, List<Role> roles, UUID customerId) {
+  User(UUID userId, Avatar avatar, Username username, Password password, Email email, Collection<Role> roles, UUID customerId) {
     this.userId = userId;
     this.avatar = avatar;
     this.username = username;
@@ -35,7 +33,7 @@ public class User extends AbstractAggregateRoot<User> {
     this.password = Password.create(encryptedPassword);
   }
 
-  public static User create(UUID userId, Avatar avatar, Username username, Password password, Email email, List<Role> roles, UUID customerId) {
+  public static User create(UUID userId, Avatar avatar, Username username, Password password, Email email, Collection<Role> roles, UUID customerId) {
     if(roles == null || roles.isEmpty()) {
       throw new IllegalArgumentException("Roles cannot be null or empty");
     }
@@ -61,7 +59,7 @@ public class User extends AbstractAggregateRoot<User> {
   }
 
   public User assignRoles(Collection<Role> roles) {
-    List<Role> totalRoles = new ArrayList<>(this.roles);
+    Collection<Role> totalRoles = new ArrayList<>(this.roles);
     totalRoles.addAll(roles);
     return new User(this.userId, this.avatar, this.username, this.password, this.email, totalRoles, this.customerId);
   }

@@ -6,7 +6,6 @@ import com.julian.commerceauthsecurity.domain.repository.RoleRepository;
 import com.julian.commerceshared.repository.UseCase;
 import org.springframework.data.domain.Page;
 
-import java.util.Collection;
 
 public class GetAllRolesUseCase implements UseCase<FilteredRolesQuery, Page<Role>> {
 
@@ -20,7 +19,7 @@ public class GetAllRolesUseCase implements UseCase<FilteredRolesQuery, Page<Role
     public Page<Role> execute(FilteredRolesQuery command) {
         return roleRepository.findFiltered(
                 command.name(),
-                command.roleNames(),
+                command.rolesId(),
                 command.pagination()
         );
     }

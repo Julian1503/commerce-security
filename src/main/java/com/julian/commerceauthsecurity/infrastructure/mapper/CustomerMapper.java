@@ -4,7 +4,9 @@ import com.julian.commerceauthsecurity.domain.models.Customer;
 import com.julian.commerceauthsecurity.domain.valueobject.Address;
 import com.julian.commerceauthsecurity.infrastructure.entity.CustomerEntity;
 import com.julian.commerceshared.repository.Mapper;
+import org.springframework.stereotype.Component;
 
+@Component
 public class CustomerMapper implements Mapper<Customer, CustomerEntity> {
 
     public CustomerEntity toSource(Customer customer) {

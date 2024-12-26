@@ -1,11 +1,11 @@
 package com.julian.commerceauthsecurity.infrastructure.implementation;
 
-import com.julian.commerceauthsecurity.domain.service.PasswordEncryptionService;
+import com.julian.commerceauthsecurity.domain.service.EncryptionService;
 import com.julian.commerceshared.security.SpringCrypto;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SpringCryptoPasswordEncryptionService implements PasswordEncryptionService {
+public class SpringCryptoPasswordEncryptionService implements EncryptionService {
 
     @Override
     public String encrypt(String textToEncrypt) {

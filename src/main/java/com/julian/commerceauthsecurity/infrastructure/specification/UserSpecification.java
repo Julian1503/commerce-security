@@ -9,15 +9,38 @@ import java.util.Collection;
 public class UserSpecification {
 
     public static Specification<UserEntity> hasUsername(String username) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("username"), username);
+        return (root, query, criteriaBuilder) -> {
+            if (username == null || username.trim().isEmpty()) {
+                return criteriaBuilder.conjunction();
+            }
+            return criteriaBuilder.equal(
+                    criteriaBuilder.lower(root.get("username")),
+                    username.toLowerCase()
+            );
+        };
     }
 
     public static Specification<UserEntity> hasEmail(String email) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("email"), email);
+
+        return (root, query, criteriaBuilder) -> {
+            if (email == null || email.trim().isEmpty()) {
+                return criteriaBuilder.conjunction();
+            }
+            return criteriaBuilder.equal(
+                    criteriaBuilder.lower(root.get("email")),
+                    email.toLowerCase()
+            );
+        };
     }
 
     public static Specification<UserEntity> hasRoles(Collection<String> roleNames) {
-        return (root, query, criteriaBuilder) ->root.join("roles").get("name").in(roleNames);
+        return (root, query, criteriaBuilder) -> {
+            if (roleNames == null || roleNames.isEmpty()) {
+                return criteriaBuilder.conjunction();
+            }
+            root.fetch("roles");
+            return root.join("roles").get("name").in(roleNames);
+        };
     }
 
     public static Specification<UserEntity> isActive(Boolean active) {

@@ -9,12 +9,14 @@ import com.julian.commerceshared.repository.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
+@Repository
 public class UserJpaRepositoryAdapter implements UserRepository {
     private final UserJpaRepository userJpaRepository;
     private final Mapper<User, UserEntity> userMapper;
@@ -49,12 +51,9 @@ public class UserJpaRepositoryAdapter implements UserRepository {
 
     @Override
     public Page<User> findAllWithFilter(String username, String email, Collection<String> roleNames, Boolean active, LocalDate createdAfter, LocalDate createdBefore, Pageable pagination) {
+
         Specification<UserEntity> spec = UserSpecification.hasUsername(username)
-                .and(UserSpecification.hasEmail(email))
-                .and(UserSpecification.hasRoles(roleNames))
-                .and(UserSpecification.isActive(active))
-                .and(UserSpecification.createdAfter(createdAfter))
-                .and(UserSpecification.createdBefore(createdBefore));
+                .and(UserSpecification.hasEmail(email));
         Page<UserEntity> userEntities = userJpaRepository.findAll(spec, pagination);
         return userEntities.map(userMapper::toTarget);
     }
@@ -62,5 +61,10 @@ public class UserJpaRepositoryAdapter implements UserRepository {
     @Override
     public void delete(UUID id) {
         userJpaRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean existsByEmail(String value) {
+        return userJpaRepository.existsByEmail(value);
     }
 }

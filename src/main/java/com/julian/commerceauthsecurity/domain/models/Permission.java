@@ -1,6 +1,6 @@
 package com.julian.commerceauthsecurity.domain.models;
 
-import com.julian.commerceauthsecurity.domain.valueobject.Name;
+import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import lombok.Getter;
 
 import java.util.Objects;
@@ -9,16 +9,16 @@ import java.util.UUID;
 @Getter
 public class Permission {
   private final UUID id;
-  private final Name name;
+  private final SecurityName name;
 
-  Permission(UUID id, Name name) {
+  Permission(UUID id, SecurityName name) {
     this.id = id;
     this.name = name;
   }
 
 
   public static Permission getBasicPermission() {
-    return new Permission(UUID.fromString("BASIC_USER"), Name.create("BASIC_USER"));
+    return new Permission(UUID.fromString("BASIC_USER"), SecurityName.create("BASIC_USER"));
   }
 
 
@@ -35,11 +35,11 @@ public class Permission {
     return Objects.hash(id, name);
   }
 
-  public static Permission create(UUID id, Name name) {
+  public static Permission create(UUID id, SecurityName name) {
     return new Permission(id, name);
   }
 
-    public Permission update(Name name) {
+    public Permission update(SecurityName name) {
       return new Permission(this.id, name);
     }
 }

@@ -10,7 +10,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import java.io.Serial;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Collection;
+import java.util.Collection;
 import java.util.UUID;
 
 @Data
@@ -38,18 +39,18 @@ public class UserEntity implements Serializable{
     private boolean active;
     @CreatedDate
     @Column(name = "created_at", updatable = false)
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
     @Column(name = "updated_at")
     @LastModifiedDate
-    private LocalDateTime modifiedDate;
+    private LocalDateTime updatedAt;
 
     @ManyToMany
     @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
-    private List<RoleEntity> roles;
+    private Collection<RoleEntity> roles;
     @ManyToOne
     private CustomerEntity customer;
 
-    public UserEntity(String username, List<RoleEntity> roles) {
+    public UserEntity(String username, Collection<RoleEntity> roles) {
         this.username = username;
         this.roles = roles;
     }

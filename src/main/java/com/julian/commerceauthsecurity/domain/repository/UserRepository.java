@@ -17,4 +17,5 @@ public interface UserRepository {
     Optional<User> findById(UUID id);
     Page<User> findAllWithFilter(String username, String email, Collection<String> role, Boolean active, LocalDate createdAfter, LocalDate createdBefore, Pageable pagination);
     void delete(UUID id);
+    boolean existsByEmail(String value);
 }

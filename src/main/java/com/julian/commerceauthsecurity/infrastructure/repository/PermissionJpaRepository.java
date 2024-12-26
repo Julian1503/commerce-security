@@ -12,4 +12,5 @@ import java.util.UUID;
 public interface PermissionJpaRepository extends JpaRepository<PermissionEntity, UUID> {
     @Cacheable("permissions")
     Page<PermissionEntity> findAll(Specification<PermissionEntity> specification, Pageable pageable);
+    boolean existsByName(String name);
 }
