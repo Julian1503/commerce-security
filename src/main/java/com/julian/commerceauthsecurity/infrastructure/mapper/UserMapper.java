@@ -41,7 +41,6 @@ public class UserMapper implements Mapper<User, UserEntity> {
 
         var roles = entity.getRoles().stream().map(roleMapper::toTarget).collect(Collectors.toList());
 
-        var customerEntity = entity.getCustomer();
 
 
         return User.create(
@@ -50,8 +49,7 @@ public class UserMapper implements Mapper<User, UserEntity> {
                 Username.create(entity.getUsername()),
                 Password.create(entity.getPassword()),
                 Email.create(entity.getEmail()),
-                roles,
-                customerEntity != null? customerEntity.getId() : null
+                roles
         );
     }
 }

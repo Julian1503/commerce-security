@@ -26,7 +26,7 @@ public class CreateUserUseCase implements UseCase<CreateBasicUserCommand, UUID> 
     @Override
     public UUID execute(CreateBasicUserCommand command) {
         String passwordEncrypted = passwordEncryptionService.encrypt(command.password());
-        User modelUser = User.create(null, Avatar.getDefaultAvatar(), Username.create(command.username()), Password.create(passwordEncrypted), Email.create(command.email()), Role.getDefaultRoles(), null);
+        User modelUser = User.create(null, Avatar.getDefaultAvatar(), Username.create(command.username()), Password.create(passwordEncrypted), Email.create(command.email()), Role.getDefaultRoles());
         UserValidation.validate(userRepository, modelUser);
         return userRepository.save(modelUser);
     }
