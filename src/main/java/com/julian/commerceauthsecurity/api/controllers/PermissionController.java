@@ -52,7 +52,7 @@ public class PermissionController extends BaseController {
 
     @PreAuthorize("hasPermission('GET_ALL_PERMISSIONS')")
     @GetMapping("/get-all")
-    public ResponseEntity<BaseResponse> getAllPermissions(@Valid GetAllPermissionsRequest getAllPermissionsRequest, PagedResourcesAssembler<PermissionResponse> assembler) {
+    public ResponseEntity<BaseResponse> getAllPermissions(@Valid @ModelAttribute GetAllPermissionsRequest getAllPermissionsRequest, PagedResourcesAssembler<PermissionResponse> assembler) {
         FilteredPermissionQuery filteredPermissionQuery = new FilteredPermissionQuery(getAllPermissionsRequest.getName(), getAllPermissionsRequest.getPageable());
         Page<Permission> permissions = getAllPermissionUseCase.execute(filteredPermissionQuery);
         PagedModel<EntityModel<PermissionResponse>> response = assembler.toModel(permissions.map(permissionMapper::toSource));
@@ -61,7 +61,7 @@ public class PermissionController extends BaseController {
 
     @PreAuthorize("hasPermission('GET_PERMISSION_BY_ID')")
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<BaseResponse> getPermissionById(@Valid GetPermissionByIdRequest getPermissionByIdRequest) {
+    public ResponseEntity<BaseResponse> getPermissionById(@Valid @ModelAttribute GetPermissionByIdRequest getPermissionByIdRequest) {
         GetPermissionByIdQuery getPermissionByIdQuery = new GetPermissionByIdQuery(getPermissionByIdRequest.getId());
         Permission permission = getPermissionByIdUseCase.execute(getPermissionByIdQuery);
         return createSuccessResponse(permissionMapper.toSource(permission), "Permission returned successfully");

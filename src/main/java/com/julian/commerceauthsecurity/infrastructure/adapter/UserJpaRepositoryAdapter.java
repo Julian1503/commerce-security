@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository
 public class UserJpaRepositoryAdapter implements UserRepository {
     private final UserJpaRepository userJpaRepository;
     private final Mapper<User, UserEntity> userMapper;

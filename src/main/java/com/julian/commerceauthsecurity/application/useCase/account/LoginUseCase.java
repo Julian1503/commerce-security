@@ -20,9 +20,9 @@ public class LoginUseCase implements UseCase<LoginCommand, AuthDto> {
 
     @Override
     public AuthDto execute(LoginCommand command) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(command.getUsername(), command.getPassword());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(command.username(), command.password());
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
         String tokenGenerated = tokenManager.generateToken(authentication);
-        return new AuthDto(tokenGenerated, command.getUsername());
+        return new AuthDto(tokenGenerated, command.username());
     }
 }

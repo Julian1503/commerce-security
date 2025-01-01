@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 
-@Repository
 public class PermissionJpaRepositoryAdapter implements PermissionRepository {
 
     private final PermissionJpaRepository permissionJpaRepository;

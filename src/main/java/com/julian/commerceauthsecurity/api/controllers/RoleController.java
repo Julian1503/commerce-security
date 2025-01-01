@@ -55,7 +55,7 @@ public class RoleController extends BaseController {
 
     @PreAuthorize("hasPermission('GET_ALL_ROLES')")
     @GetMapping("/get-all")
-    public ResponseEntity<BaseResponse> getAllRoles(@Valid GetAllRolesRequest request,
+    public ResponseEntity<BaseResponse> getAllRoles(@Valid @ModelAttribute  GetAllRolesRequest request,
                                                     PagedResourcesAssembler<RoleResponse> assembler) {
         FilteredRolesQuery filteredRolesQuery = new FilteredRolesQuery(request.getName(), request.getPermissionIds(), request.getPageable());
         Page<Role> roles = getAllRolesUseCase.execute(filteredRolesQuery);

@@ -44,14 +44,29 @@ public class UserSpecification {
     }
 
     public static Specification<UserEntity> isActive(Boolean active) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("active"), active);
+        return (root, query, criteriaBuilder) -> {
+            if (active == null) {
+                return criteriaBuilder.conjunction();
+            }
+            return criteriaBuilder.equal(root.get("active"), active);
+        };
     }
 
     public static Specification<UserEntity> createdAfter(LocalDate createdAfter) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.greaterThanOrEqualTo(root.get("createdAt"), createdAfter);
+        return (root, query, criteriaBuilder) -> {
+          if (createdAfter == null) {
+              return criteriaBuilder.conjunction();
+          }
+            return criteriaBuilder.greaterThanOrEqualTo(root.get("createdAt"), createdAfter);
+        };
     }
 
     public static Specification<UserEntity> createdBefore(LocalDate createdBefore) {
-        return (root, query, criteriaBuilder) -> criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), createdBefore);
+        return (root, query, criteriaBuilder) -> {
+            if (createdBefore == null) {
+                return criteriaBuilder.conjunction();
+            }
+            return criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), createdBefore);
+        };
     }
 }

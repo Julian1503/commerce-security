@@ -18,30 +18,29 @@ public class User extends AbstractAggregateRoot<User> {
   private final Email email;
   private final Collection<Role> roles;
   private final boolean active = true;
-  private final UUID customerId;
 
-  User(UUID userId, Avatar avatar, Username username, Password password, Email email, Collection<Role> roles, UUID customerId) {
+  User(UUID userId, Avatar avatar, Username username, Password password, Email email, Collection<Role> roles) {
     this.userId = userId;
     this.avatar = avatar;
+    this.password = password;
     this.username = username;
     this.email = email;
-    this.roles = roles != null ? new ArrayList<>(roles) : new ArrayList<>();
-    this.customerId = customerId;
+    this.roles = new ArrayList<>(roles);
   }
 
   public void changePassword(String encryptedPassword) {
     this.password = Password.create(encryptedPassword);
   }
 
-  public static User create(UUID userId, Avatar avatar, Username username, Password password, Email email, Collection<Role> roles, UUID customerId) {
+  public static User create(UUID userId, Avatar avatar, Username username, Password password, Email email, Collection<Role> roles) {
     if(roles == null || roles.isEmpty()) {
       throw new IllegalArgumentException("Roles cannot be null or empty");
     }
-    return new User(userId, avatar, username, password, email, roles, customerId);
+    return new User(userId, avatar, username, password, email, roles);
   }
 
   public User update(Avatar avatar, Username username, Email email) {
-    return new User(this.userId, avatar, username, this.password, email, this.roles, this.customerId);
+    return new User(this.userId, avatar, username, this.password, email, this.roles);
   }
 
 
@@ -61,6 +60,6 @@ public class User extends AbstractAggregateRoot<User> {
   public User assignRoles(Collection<Role> roles) {
     Collection<Role> totalRoles = new ArrayList<>(this.roles);
     totalRoles.addAll(roles);
-    return new User(this.userId, this.avatar, this.username, this.password, this.email, totalRoles, this.customerId);
+    return new User(this.userId, this.avatar, this.username, this.password, this.email, totalRoles);
   }
 }

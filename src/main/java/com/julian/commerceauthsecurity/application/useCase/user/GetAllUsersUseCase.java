@@ -6,12 +6,10 @@ import com.julian.commerceauthsecurity.domain.repository.UserRepository;
 import com.julian.commerceshared.repository.UseCase;
 import org.springframework.data.domain.Page;
 
-import java.util.Collection;
-
-public class FilteredUsersUseCase implements UseCase<GetUsersWithFilterQuery, Page<User>> {
+public class GetAllUsersUseCase implements UseCase<GetUsersWithFilterQuery, Page<User>> {
     private final UserRepository userRepository;
 
-    public FilteredUsersUseCase(UserRepository userRepository) {
+    public GetAllUsersUseCase(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 

@@ -45,7 +45,7 @@ public class UserUseCasesConfig {
 
     @Bean
     public UseCase<GetUsersWithFilterQuery, Page<User>> getUsersWithFilterUseCase(UserRepository userRepository) {
-        return new FilteredUsersUseCase(userRepository);
+        return new GetAllUsersUseCase(userRepository);
     }
 
     @Bean

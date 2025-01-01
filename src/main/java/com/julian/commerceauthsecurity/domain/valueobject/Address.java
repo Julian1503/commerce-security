@@ -1,5 +1,9 @@
 package com.julian.commerceauthsecurity.domain.valueobject;
 
+import com.julian.commerceshared.valueobject.AbstractValueObject;
+
+import java.util.Objects;
+
 public final class Address {
     private final String street;
     private final String houseNumber;
@@ -34,5 +38,23 @@ public final class Address {
 
     public String getDoor() {
         return door;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{street='" + this.street + "', houseNumber='" + this.houseNumber + "', floor='" + this.floor + "', door='" + this.door + "'}";
+    }
+
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        } else if (o != null && this.getClass() == o.getClass()) {
+            return Objects.equals(this.toString(), o.toString());
+        }
+        return false;
+    }
+
+    public int hashCode() {
+        return Objects.hash(this.toString());
     }
 }

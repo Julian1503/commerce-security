@@ -19,6 +19,9 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.UUID;
+
+import static java.util.Objects.hash;
 
 @Service
 public class JwtTokenService implements TokenManager {
@@ -37,7 +40,7 @@ public class JwtTokenService implements TokenManager {
 
     @Override
     public boolean validateToken(String token) {
-        Boolean isValid = false;
+        boolean isValid = false;
         DecodedJWT jwt = this.getClaimsFromToken(token);
         if (jwt != null) {
             isValid = true;
@@ -59,7 +62,9 @@ public class JwtTokenService implements TokenManager {
                 .claim("scid", user.getUserId())
                 .claim("scope", authentication.getAuthorities().stream()
                         .map(GrantedAuthority::getAuthority).toList())
-                .claim("email", user.getEmail());
+                .claim("username", user.getUsername().getValue())
+                .claim("email_hash", hash(user.getEmail().getValue()))
+                .claim("jti", UUID.randomUUID().toString());
 
         return encoder.encode(JwtEncoderParameters.from(claimsBuilder.build())).getTokenValue();
     }
@@ -81,12 +86,6 @@ public class JwtTokenService implements TokenManager {
     @Override
     public DecodedJWT decodeToken(String token) {
         return JWT.decode(token);
-    }
-
-    private void addClaimIfNotNull(JwtClaimsSet.Builder builder, String key, Object value) {
-        if (value != null) {
-            builder.claim(key, value);
-        }
     }
 
     private DecodedJWT getClaimsFromToken(String token) {

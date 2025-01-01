@@ -2,7 +2,6 @@ package com.julian.commerceauthsecurity.application.useCase.permission;
 
 import com.julian.commerceauthsecurity.application.command.permission.DeletePermissionCommand;
 import com.julian.commerceauthsecurity.domain.models.Permission;
-import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.repository.PermissionRepository;
 import com.julian.commerceshared.repository.UseCase;
 

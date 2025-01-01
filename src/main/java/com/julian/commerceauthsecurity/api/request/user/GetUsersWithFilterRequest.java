@@ -28,7 +28,7 @@ public class GetUsersWithFilterRequest extends PagedRequest {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate createdAfter;
 
-    public GetUsersWithFilterRequest(int page, int size, String sort, String direction, String username, String email, Collection<String> role, Boolean active, LocalDate createdAfter, LocalDate createdBefore) {
+    public GetUsersWithFilterRequest(Integer page, Integer size, String sort, String direction, String username, String email, Collection<String> role, Boolean active, LocalDate createdAfter, LocalDate createdBefore) {
         super(page, size, sort, direction);
         this.username = username;
         this.email = email;

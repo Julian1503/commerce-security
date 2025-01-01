@@ -64,7 +64,7 @@ public class UserController extends BaseController {
 
     @PreAuthorize("hasPermission('GET_USER_BY_ID')")
     @GetMapping("/get-by-id/{userId}")
-    public ResponseEntity<BaseResponse> getUser(GetUserByIdRequest request) {
+    public ResponseEntity<BaseResponse> getUser(@ModelAttribute GetUserByIdRequest request) {
         GetUserByIdQuery query = new GetUserByIdQuery(request.getId());
         User user = getUserByIdUseCase.execute(query);
         UserResponse userResponse = userMapper.toSource(user);
@@ -73,7 +73,7 @@ public class UserController extends BaseController {
 
     @PreAuthorize("hasPermission('GET_ALL_USERS')")
     @GetMapping("/get-all")
-    public ResponseEntity<BaseResponse> getUserWithFilter(@Validated GetUsersWithFilterRequest request,
+    public ResponseEntity<BaseResponse> getUserWithFilter(@Validated @ModelAttribute GetUsersWithFilterRequest request,
                                                           PagedResourcesAssembler<UserResponse> assembler
     ) {
         GetUsersWithFilterQuery query = new GetUsersWithFilterQuery(

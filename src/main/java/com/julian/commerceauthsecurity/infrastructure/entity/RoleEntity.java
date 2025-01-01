@@ -24,6 +24,4 @@ public class RoleEntity {
     @OneToMany
     @JoinTable(name="role_permission", joinColumns = @JoinColumn(name="role_id"), inverseJoinColumns = @JoinColumn(name="permission_id"))
     private Collection<PermissionEntity> permissions;
-
-    public RoleEntity(String name) { this.name = name; }
 }

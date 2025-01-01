@@ -6,7 +6,7 @@ import org.springframework.data.jpa.domain.Specification;
 public class PermissionSpecification {
     public static Specification<PermissionEntity> hasName(String name) {
         return (root, query, criteriaBuilder) -> {
-            if (name == null) {
+            if (name == null || name.isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
             return criteriaBuilder.like(

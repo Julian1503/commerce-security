@@ -2,12 +2,13 @@ package com.julian.commerceauthsecurity.domain.models;
 
 import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import lombok.Getter;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Getter
-public class Permission {
+public class Permission implements GrantedAuthority {
   private final UUID id;
   private final SecurityName name;
 
@@ -18,7 +19,7 @@ public class Permission {
 
 
   public static Permission getBasicPermission() {
-    return new Permission(UUID.fromString("BASIC_USER"), SecurityName.create("BASIC_USER"));
+    return new Permission(UUID.fromString("6bf50e9c-5f89-49a5-b915-33382c338bfb"), SecurityName.create("READ_USER"));
   }
 
 
@@ -42,4 +43,10 @@ public class Permission {
     public Permission update(SecurityName name) {
       return new Permission(this.id, name);
     }
+
+  @Override
+  public String getAuthority() {
+    return name.getValue();
+  }
+
 }
