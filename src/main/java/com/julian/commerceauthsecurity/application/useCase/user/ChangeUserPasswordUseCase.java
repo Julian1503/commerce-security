@@ -30,7 +30,7 @@ public class ChangeUserPasswordUseCase implements UseCase<ChangePasswordCommand,
             throw new IllegalArgumentException("Old password is incorrect");
         }
 
-        if(Password.isValidFormat(command.newPassword())) {
+        if(!Password.isValidFormat(command.newPassword())) {
             throw new IllegalArgumentException("New password is with an invalid format");
         }
 

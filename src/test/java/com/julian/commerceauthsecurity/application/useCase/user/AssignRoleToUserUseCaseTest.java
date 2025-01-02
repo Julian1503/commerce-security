@@ -63,6 +63,21 @@ public class AssignRoleToUserUseCaseTest {
     }
 
     @Test
+    void execute_ShouldThrowException_WhenRolesIsEmpty() {
+        UUID userId = UUID.randomUUID();
+        List<UUID> roleIds = new ArrayList<>();
+        AssignRoleToUserCommand command = new AssignRoleToUserCommand(userId, roleIds);
+        assertThrows(IllegalArgumentException.class, () -> assignRoleToUserUseCase.execute(command));
+    }
+
+    @Test
+    void execute_ShouldThrowException_WhenUserIsNull() {
+        List<UUID> roleIds = Arrays.asList(UUID.randomUUID(), UUID.randomUUID());
+        AssignRoleToUserCommand command = new AssignRoleToUserCommand(null, roleIds);
+        assertThrows(IllegalArgumentException.class, () -> assignRoleToUserUseCase.execute(command));
+    }
+
+    @Test
     void execute_ShouldThrowException_WhenRolesNotFound() {
         UUID userId = UUID.randomUUID();
         List<UUID> roleIds = Arrays.asList(UUID.randomUUID(), UUID.randomUUID());

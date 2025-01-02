@@ -63,6 +63,34 @@ public class AssignPermissionToRoleUseCaseTest {
     }
 
     @Test
+    void execute_ShouldThrowException_WhenRoleIdIsNull() {
+        List<UUID> permissionIds = Arrays.asList(UUID.randomUUID(), UUID.randomUUID());
+        AssignPermissionToRoleCommand command = new AssignPermissionToRoleCommand(null, permissionIds);
+
+        assertThrows(IllegalArgumentException.class, () -> assignPermissionToRoleUseCase.execute(command));
+    }
+
+    @Test
+    void execute_ShouldThrowException_WhenPermissionsEmpty() {
+        UUID roleId = UUID.randomUUID();
+        List<UUID> permissionIds = new ArrayList<>();
+        AssignPermissionToRoleCommand command = new AssignPermissionToRoleCommand(roleId, permissionIds);
+        assertThrows(IllegalArgumentException.class, () -> assignPermissionToRoleUseCase.execute(command));
+    }
+
+    @Test
+    void execute_ShouldThrowException_WhenPermissionsEntitySizeIsNotCorrect() {
+        List<UUID> permissionIds = Arrays.asList(UUID.randomUUID(), UUID.randomUUID());
+        Role role = RoleBuilder.getBasicRole();
+        List<Permission> permissions = Arrays.asList(PermissionBuilder.createPermissionWithRandomName(), PermissionBuilder.createPermissionWithRandomName());
+        AssignPermissionToRoleCommand command = new AssignPermissionToRoleCommand(role.getId(), permissionIds);
+        when(roleRepository.findById(role.getId())).thenReturn(Optional.of(role));
+        when(permissionRepository.findAllByIds(any())).thenReturn(permissions.subList(0, 1));
+        assertThrows(IllegalArgumentException.class, () -> assignPermissionToRoleUseCase.execute(command));
+    }
+
+
+    @Test
     void execute_ShouldThrowException_WhenPermissionsNotFound() {
         UUID roleId = UUID.randomUUID();
         List<UUID> permissionIds = Arrays.asList(UUID.randomUUID(), UUID.randomUUID());

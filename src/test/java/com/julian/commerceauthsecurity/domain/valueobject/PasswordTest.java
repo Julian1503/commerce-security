@@ -8,9 +8,9 @@ class PasswordTest {
 
     @Test
     void testCreateValidPassword() {
-        Password password = Password.create("SecurePassword123!");
+        Password password = Password.create("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4!");
         assertNotNull(password);
-        assertEquals("SecurePassword123!", password.getValue());
+        assertEquals("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4!", password.getValue());
     }
 
     @Test
@@ -32,17 +32,14 @@ class PasswordTest {
     @Test
     void testPasswordFormatValidation() {
         assertTrue(Password.isValidFormat("Valid1!Password"));
-
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            Password.isValidFormat("invalidpassword");
-        });
-        assertEquals("Password must contain at least one digit, one lowercase letter, one uppercase letter, and one special character", exception.getMessage());
+        boolean result = Password.isValidFormat("invalidpassword");
+        assertFalse(result);
     }
 
     @Test
     void testPasswordEqualityAndHashCode() {
-        Password password1 = Password.create("SecurePassword123!");
-        Password password2 = Password.create("SecurePassword123!");
+        Password password1 = Password.create("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4!");
+        Password password2 = Password.create("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4!");
         Password password3 = Password.create("DifferentPassword1!");
 
         assertEquals(password1, password2);
@@ -53,7 +50,7 @@ class PasswordTest {
 
     @Test
     void testPasswordToString() {
-        Password password = Password.create("SecurePassword123!");
-        assertEquals("SecurePassword123!", password.toString());
+        Password password = Password.create("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4!");
+        assertEquals("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4!", password.toString());
     }
 }

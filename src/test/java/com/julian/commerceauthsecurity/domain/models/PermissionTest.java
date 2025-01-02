@@ -41,7 +41,8 @@ class PermissionTest {
 
         assertEquals(permission1, permission2);
         assertEquals(permission1.hashCode(), permission2.hashCode());
-
+        assertNotEquals(null, permission1);
+        assertNotEquals(new Object(), permission1);
         Permission permission3 = Permission.create(UUID.randomUUID(), permissionName);
         assertNotEquals(permission1, permission3);
     }

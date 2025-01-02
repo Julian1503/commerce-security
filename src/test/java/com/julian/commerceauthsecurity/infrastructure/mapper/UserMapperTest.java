@@ -35,8 +35,7 @@ class UserMapperTest {
                 Username.create("johndoe"),
                 Password.create("password123"),
                 Email.create("johndoe@example.com"),
-                List.of(role),
-                null
+                List.of(role)
         );
 
         RoleEntity roleEntity = new RoleEntity();

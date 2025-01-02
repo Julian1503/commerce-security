@@ -14,7 +14,7 @@ public class Role {
     Role(UUID id, SecurityName name, Collection<Permission> permissions) {
         this.id = id;
         this.name = name;
-        this.permissions = permissions != null ? permissions : Collections.emptyList();
+        this.permissions = permissions;
     }
 
     public static Role getBasicRole() {

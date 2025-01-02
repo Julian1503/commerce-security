@@ -35,15 +35,14 @@ public class ChangeUserPasswordUseCaseTest {
     @Test
     void execute_ShouldChangePassword_WhenOldPasswordMatchesAndNewPasswordValid() {
         User user = UserBuilder.getValidUser();
-        ChangePasswordCommand command = new ChangePasswordCommand(user.getUsername().getValue(), "oldPassword", "newPassword");
+        ChangePasswordCommand command = new ChangePasswordCommand(user.getUsername().getValue(), "oldPassword123!", "P@ssw0rd1!");
         when(userRepository.findByUsername(command.username())).thenReturn(Optional.of(user));
         when(encryptionService.matches(command.oldPassword(), user.getPassword().getValue())).thenReturn(true);
-        when(encryptionService.encrypt(command.newPassword())).thenReturn("encryptedPassword");
+        when(encryptionService.encrypt(command.newPassword())).thenReturn("6548a6cd0fe8da4d0ce4aba1d1b2b3a3b3b7c30ee0f22487f009f5ebaf23e88f041a3ca6e68208ec2d0d69bff4818bc1");
 
         boolean result = changeUserPasswordUseCase.execute(command);
 
         assertTrue(result);
-        verify(user).changePassword("encryptedPassword");
         verify(userRepository, times(1)).save(user);
     }
 
@@ -54,6 +53,17 @@ public class ChangeUserPasswordUseCaseTest {
 
         when(userRepository.findByUsername(command.username())).thenReturn(Optional.of(user));
         when(encryptionService.matches(command.oldPassword(), user.getPassword().getValue())).thenReturn(false);
+
+        assertThrows(IllegalArgumentException.class, () -> changeUserPasswordUseCase.execute(command));
+    }
+
+    @Test
+    void execute_ShouldThrowException_WhenNewPasswordDoesNotMatch() {
+        User user = UserBuilder.getValidUser();
+        ChangePasswordCommand command = new ChangePasswordCommand(user.getUsername().getValue(), "oldPassword", "newPassword");
+
+        when(userRepository.findByUsername(command.username())).thenReturn(Optional.of(user));
+        when(encryptionService.matches(command.oldPassword(), user.getPassword().getValue())).thenReturn(true);
 
         assertThrows(IllegalArgumentException.class, () -> changeUserPasswordUseCase.execute(command));
     }

@@ -17,7 +17,7 @@ public class UserBuilder {
         return createUserWithParams(
                 UUID.randomUUID(),
                 Username.create("testuser"),
-                Password.create("securePassword123"),
+                Password.create("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4"),
                 Email.create("test@example.com")
         );
     }
@@ -34,8 +34,7 @@ public class UserBuilder {
                 username,
                 password,
                 email,
-                List.of(Role.create(UUID.randomUUID(), SecurityName.create("USER"), List.of())),
-                UUID.randomUUID()
+                List.of(Role.create(UUID.randomUUID(), SecurityName.create("USER"), List.of()))
         );
     }
 
@@ -55,8 +54,7 @@ public class UserBuilder {
                 true,
                 LocalDateTime.now(),
                 LocalDateTime.now(),
-                roles,
-                null
+                roles
         );
     }
 
@@ -64,7 +62,7 @@ public class UserBuilder {
         return createUserEntityWithParams(
                 UUID.randomUUID(),
                 "testuser",
-                "securePassword123",
+                "4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4",
                 "ju@do.com",
                 List.of(new RoleEntity(UUID.randomUUID(), "USER", List.of()))
         );

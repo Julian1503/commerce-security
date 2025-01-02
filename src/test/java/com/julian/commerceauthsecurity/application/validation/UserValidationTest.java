@@ -80,10 +80,9 @@ class UserValidationTest {
                         UUID.randomUUID(),
                         Avatar.create("avatar-url"),
                         Username.create("testuser"),
-                        Password.create("securePassword123"),
+                        Password.create("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4"),
                         Email.create("test@example.com"),
-                        roles,
-                        UUID.randomUUID()
+                        roles
                 )
         );
 
@@ -95,7 +94,7 @@ class UserValidationTest {
     void testValidateThrowsExceptionWhenUserIdIsNull(UUID userId) {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> createUserWithParams(userId, Username.create("testuser"), Password.create("securePassword123"), Email.create("test@example.com"))
+                () -> createUserWithParams(userId, Username.create("testuser"), Password.create("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4"), Email.create("test@example.com"))
         );
 
         assertEquals("User ID cannot be null", exception.getMessage());
@@ -106,7 +105,7 @@ class UserValidationTest {
     void testValidateThrowsExceptionWhenUsernameIsNull(Username username) {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> createUserWithParams(UUID.randomUUID(), username, Password.create("securePassword123"), Email.create("test@example.com"))
+                () -> createUserWithParams(UUID.randomUUID(), username, Password.create("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4"), Email.create("test@example.com"))
         );
 
         assertEquals("Username cannot be null", exception.getMessage());
@@ -128,7 +127,7 @@ class UserValidationTest {
     void testValidateThrowsExceptionWhenEmailIsNull(Email email) {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
-                () -> createUserWithParams(UUID.randomUUID(), Username.create("testuser"), Password.create("securePassword123"), email)
+                () -> createUserWithParams(UUID.randomUUID(), Username.create("testuser"), Password.create("4d65b6d7e1435e69cac07a8b5650384f566cb513ff5468379ede0dc560970ba9c7f9cb8e9ec877d2aa603115276b56d4"), email)
         );
 
         assertEquals("Email cannot be null", exception.getMessage());

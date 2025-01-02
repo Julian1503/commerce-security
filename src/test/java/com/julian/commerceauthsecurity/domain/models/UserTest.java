@@ -19,22 +19,20 @@ class UserTest {
     private Password password;
     private Email email;
     private Collection<Role> roles;
-    private UUID customerId;
 
     @BeforeEach
     void setUp() {
         userId = UUID.randomUUID();
         avatar = Avatar.create("default.png");
         username = Username.create("testuser");
-        password = Password.create("encryptedPassword");
+        password = Password.create("6548a6cd0fe8da4d0ce4aba1d1b2b3a3b3b7c30ee0f22487f009f5ebaf23e88f041a3ca6e68208ec2d0d69bff4818bc1");
         email = Email.create("test@example.com");
         roles = List.of(Role.getBasicRole());
-        customerId = UUID.randomUUID();
     }
 
     @Test
     void testCreateUserWithValidData() {
-        User user = User.create(userId, avatar, username, password, email, roles, customerId);
+        User user = User.create(userId, avatar, username, password, email, roles);
         assertNotNull(user);
         assertEquals(userId, user.getUserId());
         assertEquals(avatar, user.getAvatar());
@@ -43,26 +41,25 @@ class UserTest {
         assertEquals(email, user.getEmail());
         assertEquals(roles, user.getRoles());
         assertTrue(user.isActive());
-        assertEquals(customerId, user.getCustomerId());
     }
 
     @Test
     void testCreateUserWithEmptyRolesThrowsException() {
         Exception exception = assertThrows(IllegalArgumentException.class, () ->
-                User.create(userId, avatar, username, password, email, List.of(), customerId));
+                User.create(userId, avatar, username, password, email, List.of()));
         assertEquals("Roles cannot be null or empty", exception.getMessage());
     }
 
     @Test
     void testChangePassword() {
-        User user = User.create(userId, avatar, username, password, email, roles, customerId);
-        user.changePassword("newEncryptedPassword");
-        assertEquals("newEncryptedPassword", user.getPassword().getValue());
+        User user = User.create(userId, avatar, username, password, email, roles);
+        user.changePassword("6548a6cd0fe8da4d0ce4aba1d1b2b3a3b3b7c30ee0f22487f009f5ebaf23e88f041a3ca6e68208ec2d0d69bff4818bc1");
+        assertEquals("6548a6cd0fe8da4d0ce4aba1d1b2b3a3b3b7c30ee0f22487f009f5ebaf23e88f041a3ca6e68208ec2d0d69bff4818bc1", user.getPassword().getValue());
     }
 
     @Test
     void testUpdateUser() {
-        User user = User.create(userId, avatar, username, password, email, roles, customerId);
+        User user = User.create(userId, avatar, username, password, email, roles);
         Avatar newAvatar = Avatar.create("new_avatar.png");
         Username newUsername = Username.create("newuser");
         Email newEmail = Email.create("new@example.com");
@@ -76,7 +73,7 @@ class UserTest {
 
     @Test
     void testAssignRoles() {
-        User user = User.create(userId, avatar, username, password, email, roles, customerId);
+        User user = User.create(userId, avatar, username, password, email, roles);
         Role newRole = Role.create(UUID.randomUUID(), com.julian.commerceauthsecurity.domain.valueobject.SecurityName.create("ADMIN"), List.of());
         User updatedUser = user.assignRoles(List.of(newRole));
 
@@ -86,15 +83,15 @@ class UserTest {
 
     @Test
     void testEqualityAndHashCode() {
-        User user1 = User.create(userId, avatar, username, password, email, roles, customerId);
-        User user2 = User.create(userId, avatar, username, password, email, roles, customerId);
+        User user1 = User.create(userId, avatar, username, password, email, roles);
+        User user2 = User.create(userId, avatar, username, password, email, roles);
         assertEquals(user1, user2);
         assertFalse(user1.equals(new Object()));
         assertFalse(user1.equals(null));
         assertTrue(user1.equals(user1));
         assertEquals(user1.hashCode(), user2.hashCode());
 
-        User user3 = User.create(UUID.randomUUID(), avatar, username, password, email, roles, customerId);
+        User user3 = User.create(UUID.randomUUID(), avatar, username, password, email, roles);
         assertNotEquals(user1, user3);
     }
 }

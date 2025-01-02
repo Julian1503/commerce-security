@@ -57,6 +57,13 @@ class AddressTest {
     }
 
     @Test
+    void testAddressEquality_ItsOwnInstance() {
+        Address address = Address.create("Main Street", "123", "4A", "2B");
+        boolean result = address.equals(address);
+        assertTrue(result);
+    }
+
+    @Test
     void testAddressEquality_FalseWithNull() {
         Address address1 = Address.create("Main Street", "123", "4A", "2B");
 
