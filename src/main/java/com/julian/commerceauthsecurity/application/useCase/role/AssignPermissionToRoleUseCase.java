@@ -8,9 +8,6 @@ import com.julian.commerceauthsecurity.domain.repository.RoleRepository;
 import com.julian.commerceshared.repository.UseCase;
 
 import java.util.Collection;
-import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
 
 public class AssignPermissionToRoleUseCase implements UseCase<AssignPermissionToRoleCommand, Boolean> {
 

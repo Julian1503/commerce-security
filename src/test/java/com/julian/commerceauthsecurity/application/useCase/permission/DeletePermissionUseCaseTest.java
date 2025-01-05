@@ -3,7 +3,6 @@ package com.julian.commerceauthsecurity.application.useCase.permission;
 import com.julian.commerceauthsecurity.application.command.permission.DeletePermissionCommand;
 import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.repository.PermissionRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

@@ -2,13 +2,10 @@ package com.julian.commerceauthsecurity.api.request.user;
 
 import com.julian.commerceauthsecurity.api.request.PagedRequest;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import jakarta.validation.constraints.Pattern;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;

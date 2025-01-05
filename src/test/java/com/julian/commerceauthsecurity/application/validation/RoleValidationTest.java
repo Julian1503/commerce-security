@@ -2,15 +2,12 @@ package com.julian.commerceauthsecurity.application.validation;
 
 import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.repository.RoleRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import org.junit.jupiter.api.Test;
 import util.RoleBuilder;
 
-import java.util.List;
-import java.util.UUID;
-
-import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class RoleValidationTest {
 

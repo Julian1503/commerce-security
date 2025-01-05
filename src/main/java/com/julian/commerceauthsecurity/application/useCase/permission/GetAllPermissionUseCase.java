@@ -6,8 +6,6 @@ import com.julian.commerceauthsecurity.domain.repository.PermissionRepository;
 import com.julian.commerceshared.repository.UseCase;
 import org.springframework.data.domain.Page;
 
-import java.util.Collection;
-
 public class GetAllPermissionUseCase implements UseCase<FilteredPermissionQuery, Page<Permission>> {
     private final PermissionRepository permissionRepository;
 

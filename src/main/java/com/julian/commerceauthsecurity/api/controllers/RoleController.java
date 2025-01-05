@@ -20,6 +20,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -48,7 +49,7 @@ public class RoleController extends BaseController {
     @PreAuthorize("hasPermission('CREATE_ROLE')")
     @PostMapping("/create")
     public ResponseEntity<BaseResponse> createRole(@Valid @RequestBody CreateRoleRequest request) {
-        CreateRoleCommand createRoleCommand = new CreateRoleCommand(request.getName(), request.getPermissionIds());
+        CreateRoleCommand createRoleCommand = new CreateRoleCommand(request.name(), request.permissionIds());
         UUID roleId = createRoleUseCase.execute(createRoleCommand);
         return createSuccessResponse(roleId, "Role was created successfully");
     }
@@ -65,32 +66,32 @@ public class RoleController extends BaseController {
 
     @PreAuthorize("hasPermission('GET_ROLE_BY_ID')")
     @GetMapping("/get-by-id/{roleId}")
-    public ResponseEntity<BaseResponse> getRoleById(@Valid GetRoleByIdRequest request) {
-        GetRoleByIdQuery getRoleByIdQuery = new GetRoleByIdQuery(request.getRoleId());
+    public ResponseEntity<BaseResponse> getRoleById(@Validated GetRoleByIdRequest request) {
+        GetRoleByIdQuery getRoleByIdQuery = new GetRoleByIdQuery(request.roleId());
         Role role = getRoleByIdUseCase.execute(getRoleByIdQuery);
         return createSuccessResponse(roleMapper.toSource(role), "Role returned successfully");
     }
 
     @PreAuthorize("hasPermission('ASSIGN_PERMISSION_TO_ROLE')")
     @PutMapping("/assign-permission")
-    public ResponseEntity<BaseResponse> assignPermissionToRole(@Valid @RequestBody AssignPermissionsToRoleRequest request) {
-        AssignPermissionToRoleCommand command = new AssignPermissionToRoleCommand(request.getRoleId(), request.getPermissionIds());
+    public ResponseEntity<BaseResponse> assignPermissionToRole(@Validated @RequestBody AssignPermissionsToRoleRequest request) {
+        AssignPermissionToRoleCommand command = new AssignPermissionToRoleCommand(request.roleId(), request.permissionIds());
         Boolean result = assignPermissionToRoleUseCase.execute(command);
         return createSuccessResponse(result, "Permission was assigned to role successfully");
     }
 
     @PreAuthorize("hasPermission('UPDATE_ROLE')")
     @PutMapping("/update")
-    public ResponseEntity<BaseResponse> updateRole(@Valid @RequestBody UpdateRoleRequest request) {
-        UpdateRoleCommand command = new UpdateRoleCommand(request.getRoleId(), request.getName());
+    public ResponseEntity<BaseResponse> updateRole(@Validated @RequestBody UpdateRoleRequest request) {
+        UpdateRoleCommand command = new UpdateRoleCommand(request.roleId(), request.name());
         Role role = updateRoleUseCase.execute(command);
         return createSuccessResponse(roleMapper.toSource(role), "Role was updated successfully");
     }
 
     @PreAuthorize("hasPermission('DELETE_ROLE')")
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<BaseResponse> deleteRole(@Valid DeleteRoleRequest request) {
-        DeleteRoleCommand command = new DeleteRoleCommand(request.getId());
+    @DeleteMapping("/delete")
+    public ResponseEntity<BaseResponse> deleteRole(@Validated @RequestBody DeleteRoleRequest request) {
+        DeleteRoleCommand command = new DeleteRoleCommand(request.id());
         Role role = deleteRoleUseCase.execute(command);
         return createSuccessResponse(roleMapper.toSource(role), "Role was deleted successfully");
     }

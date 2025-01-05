@@ -1,7 +1,7 @@
 package com.julian.commerceauthsecurity.infrastructure.mapper;
 
-import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceauthsecurity.domain.models.Role;
+import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceauthsecurity.domain.valueobject.Avatar;
 import com.julian.commerceauthsecurity.domain.valueobject.Email;
 import com.julian.commerceauthsecurity.domain.valueobject.Password;

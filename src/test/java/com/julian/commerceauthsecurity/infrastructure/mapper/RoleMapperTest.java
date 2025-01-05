@@ -2,16 +2,12 @@ package com.julian.commerceauthsecurity.infrastructure.mapper;
 
 import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.models.Role;
-import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceauthsecurity.infrastructure.entity.PermissionEntity;
 import com.julian.commerceauthsecurity.infrastructure.entity.RoleEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import util.PermissionBuilder;
 import util.RoleBuilder;
-
-import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

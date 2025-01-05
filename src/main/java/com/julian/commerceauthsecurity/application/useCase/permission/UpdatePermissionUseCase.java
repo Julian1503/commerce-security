@@ -4,7 +4,6 @@ import com.julian.commerceauthsecurity.application.command.permission.UpdatePerm
 import com.julian.commerceauthsecurity.application.validation.PermissionValidation;
 import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.repository.PermissionRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.Name;
 import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceshared.repository.UseCase;
 

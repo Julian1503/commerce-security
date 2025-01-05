@@ -1,14 +1,7 @@
 package com.julian.commerceauthsecurity.infrastructure.security;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import com.julian.commerceauthsecurity.domain.service.TokenManager;
 import com.julian.commerceauthsecurity.domain.service.UserDetailsService;
-
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,6 +13,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.ArrayList;
+
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = {SecurityContext.class})
 @ExtendWith(SpringExtension.class)
@@ -42,8 +41,8 @@ class SecurityContextTest {
     @DisplayName("Test addTokenToSecurityContext(String)")
     void testAddTokenToSecurityContext() throws UsernameNotFoundException {
         // Arrange
-        when(tokenManager.validateToken(Mockito.<String>any())).thenReturn(true);
-        when(userDetailsService.loadUserByUsername(Mockito.<String>any()))
+        when(tokenManager.validateToken(Mockito.any())).thenReturn(true);
+        when(userDetailsService.loadUserByUsername(Mockito.any()))
                 .thenReturn(new User("janedoe", "iloveyou", new ArrayList<>()));
 
         // Act
@@ -62,8 +61,8 @@ class SecurityContextTest {
     @DisplayName("Test addTokenToSecurityContext(String)")
     void testAddTokenToSecurityContext2() throws UsernameNotFoundException {
         // Arrange
-        when(tokenManager.validateToken(Mockito.<String>any())).thenReturn(true);
-        when(userDetailsService.loadUserByUsername(Mockito.<String>any())).thenReturn(null);
+        when(tokenManager.validateToken(Mockito.any())).thenReturn(true);
+        when(userDetailsService.loadUserByUsername(Mockito.any())).thenReturn(null);
 
         // Act
         securityContext.addTokenToSecurityContext("ABC123");
@@ -83,7 +82,7 @@ class SecurityContextTest {
     @DisplayName("Test addTokenToSecurityContext(String); given TokenManager validateToken(String) return 'false'")
     void testAddTokenToSecurityContext_givenTokenManagerValidateTokenReturnFalse() {
         // Arrange
-        when(tokenManager.validateToken(Mockito.<String>any())).thenReturn(false);
+        when(tokenManager.validateToken(Mockito.any())).thenReturn(false);
 
         // Act
         securityContext.addTokenToSecurityContext("ABC123");

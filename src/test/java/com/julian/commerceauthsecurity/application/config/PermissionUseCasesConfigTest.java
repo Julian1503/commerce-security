@@ -7,18 +7,16 @@ import com.julian.commerceshared.repository.UseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class PermissionUseCasesConfigTest {
@@ -44,7 +42,7 @@ public class PermissionUseCasesConfigTest {
 
         // Assert
         assertNotNull(useCase);
-        assertTrue(useCase instanceof CreatePermissionUseCase);
+        assertInstanceOf(CreatePermissionUseCase.class, useCase);
     }
 
     @Test

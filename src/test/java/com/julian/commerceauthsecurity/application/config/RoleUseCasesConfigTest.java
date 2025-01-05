@@ -1,7 +1,11 @@
 package com.julian.commerceauthsecurity.application.config;
 
-import com.julian.commerceauthsecurity.application.command.role.*;
-import com.julian.commerceauthsecurity.application.query.role.*;
+import com.julian.commerceauthsecurity.application.command.role.AssignPermissionToRoleCommand;
+import com.julian.commerceauthsecurity.application.command.role.CreateRoleCommand;
+import com.julian.commerceauthsecurity.application.command.role.DeleteRoleCommand;
+import com.julian.commerceauthsecurity.application.command.role.UpdateRoleCommand;
+import com.julian.commerceauthsecurity.application.query.role.FilteredRolesQuery;
+import com.julian.commerceauthsecurity.application.query.role.GetRoleByIdQuery;
 import com.julian.commerceauthsecurity.application.useCase.role.*;
 import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.repository.PermissionRepository;
@@ -15,7 +19,8 @@ import org.springframework.data.domain.Page;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class RoleUseCasesConfigTest {
@@ -34,7 +39,7 @@ class RoleUseCasesConfigTest {
         UseCase<AssignPermissionToRoleCommand, Boolean> useCase =
                 context.getBean("assignPermissionToRoleUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof AssignPermissionToRoleUseCase);
+        assertInstanceOf(AssignPermissionToRoleUseCase.class, useCase);
     }
 
     @Test
@@ -42,7 +47,7 @@ class RoleUseCasesConfigTest {
         UseCase<CreateRoleCommand, UUID> useCase =
                 context.getBean("createRoleUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof CreateRoleUseCase);
+        assertInstanceOf(CreateRoleUseCase.class, useCase);
     }
 
     @Test
@@ -50,7 +55,7 @@ class RoleUseCasesConfigTest {
         UseCase<DeleteRoleCommand, Role> useCase =
                 context.getBean("deleteRoleUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof DeleteRoleUseCase);
+        assertInstanceOf(DeleteRoleUseCase.class, useCase);
     }
 
     @Test
@@ -58,7 +63,7 @@ class RoleUseCasesConfigTest {
         UseCase<FilteredRolesQuery, Page<Role>> useCase =
                 context.getBean("getAllRolesUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof GetAllRolesUseCase);
+        assertInstanceOf(GetAllRolesUseCase.class, useCase);
     }
 
     @Test
@@ -66,7 +71,7 @@ class RoleUseCasesConfigTest {
         UseCase<GetRoleByIdQuery, Role> useCase =
                 context.getBean("getRoleByIdUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof GetRoleByIdUseCase);
+        assertInstanceOf(GetRoleByIdUseCase.class, useCase);
     }
 
     @Test
@@ -74,6 +79,6 @@ class RoleUseCasesConfigTest {
         UseCase<UpdateRoleCommand, Role> useCase =
                 context.getBean("updateRoleUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof UpdateRoleUseCase);
+        assertInstanceOf(UpdateRoleUseCase.class, useCase);
     }
 }

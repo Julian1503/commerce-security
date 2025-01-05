@@ -1,7 +1,6 @@
 package com.julian.commerceauthsecurity.infrastructure.adapter;
 
 import com.julian.commerceauthsecurity.domain.models.Permission;
-import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceauthsecurity.infrastructure.entity.PermissionEntity;
 import com.julian.commerceauthsecurity.infrastructure.repository.PermissionJpaRepository;
 import com.julian.commerceshared.repository.Mapper;
@@ -16,11 +15,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import util.PermissionBuilder;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 class PermissionJpaRepositoryAdapterTest {
 

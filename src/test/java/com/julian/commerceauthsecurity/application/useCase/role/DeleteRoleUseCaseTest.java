@@ -1,11 +1,8 @@
 package com.julian.commerceauthsecurity.application.useCase.role;
 
 import com.julian.commerceauthsecurity.application.command.role.DeleteRoleCommand;
-import com.julian.commerceauthsecurity.application.useCase.role.DeleteRoleUseCase;
-import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.repository.RoleRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,7 +10,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import util.RoleBuilder;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 

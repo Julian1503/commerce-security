@@ -3,8 +3,9 @@ package com.julian.commerceauthsecurity.infrastructure.implementation;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.julian.commerceauthsecurity.domain.service.RSAKeyProvider;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.julian.commerceauthsecurity.domain.models.User;
+import com.julian.commerceauthsecurity.domain.service.RSAKeyProvider;
 import com.julian.commerceauthsecurity.domain.service.TokenManager;
 import com.julian.commerceauthsecurity.domain.service.UserAuthenticationManager;
 import org.apache.commons.logging.Log;
@@ -13,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 

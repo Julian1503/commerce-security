@@ -2,7 +2,6 @@ package com.julian.commerceauthsecurity.application.validation;
 
 import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceauthsecurity.domain.repository.UserRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.Password;
 
 public class UserValidation {
     public static void validate(UserRepository userRepository, User user) {

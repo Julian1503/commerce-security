@@ -9,9 +9,7 @@ import com.julian.commerceshared.repository.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;

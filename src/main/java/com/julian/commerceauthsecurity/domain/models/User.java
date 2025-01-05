@@ -7,7 +7,10 @@ import com.julian.commerceauthsecurity.domain.valueobject.Username;
 import lombok.Getter;
 import org.springframework.data.domain.AbstractAggregateRoot;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
+import java.util.UUID;
 
 @Getter
 public class User extends AbstractAggregateRoot<User> {

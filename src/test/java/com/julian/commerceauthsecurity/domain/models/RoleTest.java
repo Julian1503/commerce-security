@@ -4,7 +4,9 @@ import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -61,8 +63,8 @@ class RoleTest {
         Role role2 = Role.create(roleId, roleName, permissions);
 
         assertEquals(role1, role2);
-        assertFalse(role1.equals(new Object()));
-        assertFalse(role1.equals(null));
+        assertNotEquals(role1, new Object());
+        assertNotEquals(null, role1);
         assertEquals(role1.hashCode(), role2.hashCode());
 
         Role role3 = Role.create(UUID.randomUUID(), roleName, permissions);

@@ -1,19 +1,7 @@
 package com.julian.commerceauthsecurity.infrastructure.security;
 
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.anyInt;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletResponseWrapper;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,6 +12,13 @@ import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.*;
+
 @ContextConfiguration(classes = {CustomAuthenticationEntryPoint.class})
 @ExtendWith(SpringExtension.class)
 class CustomAuthenticationEntryPointTest {
@@ -33,7 +28,7 @@ class CustomAuthenticationEntryPointTest {
     private HttpServletResponseWrapper mockResponseWithWriter(PrintWriter writer) throws IOException {
         HttpServletResponseWrapper response = mock(HttpServletResponseWrapper.class);
         when(response.getWriter()).thenReturn(writer);
-        doNothing().when(response).setContentType(Mockito.<String>any());
+        doNothing().when(response).setContentType(Mockito.any());
         doNothing().when(response).setStatus(anyInt());
         return response;
     }

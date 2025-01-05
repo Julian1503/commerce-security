@@ -3,8 +3,6 @@ package com.julian.commerceauthsecurity.domain.valueobject;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class AddressTest {
 
@@ -20,9 +18,7 @@ class AddressTest {
 
     @Test
     void testCreateAddressWithNullStreet() {
-        Exception exception = assertThrows(IllegalArgumentException.class, () -> {
-            Address.create(null, "123", "4A", "2B");
-        });
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> Address.create(null, "123", "4A", "2B"));
         assertEquals("Street cannot be null or empty", exception.getMessage());
     }
 

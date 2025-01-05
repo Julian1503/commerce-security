@@ -4,7 +4,7 @@ import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,10 +41,20 @@ class PermissionTest {
 
         assertEquals(permission1, permission2);
         assertEquals(permission1.hashCode(), permission2.hashCode());
-        assertNotEquals(null, permission1);
-        assertNotEquals(new Object(), permission1);
         Permission permission3 = Permission.create(UUID.randomUUID(), permissionName);
         assertNotEquals(permission1, permission3);
+    }
+
+    @Test
+    void testEqualityWithAnotherObject() {
+        Permission permission = Permission.create(permissionId, permissionName);
+        assertNotEquals(permission, new Object());
+    }
+
+    @Test
+    void testEqualityWithNull() {
+        Permission permission = Permission.create(permissionId, permissionName);
+        assertNotEquals(permission, null);
     }
 
     @Test

@@ -8,8 +8,6 @@ import com.julian.commerceauthsecurity.domain.valueobject.Email;
 import com.julian.commerceauthsecurity.domain.valueobject.Username;
 import com.julian.commerceshared.repository.UseCase;
 
-import java.util.Optional;
-
 public class UpdateUserUseCase implements UseCase<UpdateUserCommand, User> {
     private final UserRepository userRepository;
 

@@ -17,7 +17,8 @@ import org.springframework.data.domain.Page;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class UserUseCasesConfigTest {
@@ -29,55 +30,55 @@ class UserUseCasesConfigTest {
     void testCreateUserUseCaseBean() {
         UseCase<CreateBasicUserCommand, UUID> useCase = context.getBean("createUserUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof CreateUserUseCase);
+        assertInstanceOf(CreateUserUseCase.class, useCase);
     }
 
     @Test
     void testLoginUseCaseBean() {
         UseCase<LoginCommand, AuthDto> useCase = context.getBean("loginUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof LoginUseCase);
+        assertInstanceOf(LoginUseCase.class, useCase);
     }
 
     @Test
     void testChangePasswordUseCaseBean() {
         UseCase<ChangePasswordCommand, Boolean> useCase = context.getBean("changePasswordUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof ChangeUserPasswordUseCase);
+        assertInstanceOf(ChangeUserPasswordUseCase.class, useCase);
     }
 
     @Test
     void testGetUserByIdUseCaseBean() {
         UseCase<GetUserByIdQuery, User> useCase = context.getBean("getUserByIdUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof GetUserByIdUseCase);
+        assertInstanceOf(GetUserByIdUseCase.class, useCase);
     }
 
     @Test
     void testGetUsersWithFilterUseCaseBean() {
         UseCase<GetUsersWithFilterQuery, Page<User>> useCase = context.getBean("getUsersWithFilterUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof GetAllUsersUseCase);
+        assertInstanceOf(GetAllUsersUseCase.class, useCase);
     }
 
     @Test
     void testUpdateUserUseCaseBean() {
         UseCase<UpdateUserCommand, User> useCase = context.getBean("updateUserUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof UpdateUserUseCase);
+        assertInstanceOf(UpdateUserUseCase.class, useCase);
     }
 
     @Test
     void testDeleteUserUseCaseBean() {
         UseCase<DeleteUserCommand, User> useCase = context.getBean("deleteUserUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof DeleteUserUseCase);
+        assertInstanceOf(DeleteUserUseCase.class, useCase);
     }
 
     @Test
     void testAssignRoleToUserUseCaseBean() {
         UseCase<AssignRoleToUserCommand, Boolean> useCase = context.getBean("assignRoleToUserUseCase", UseCase.class);
         assertNotNull(useCase);
-        assertTrue(useCase instanceof AssignRoleToUserUseCase);
+        assertInstanceOf(AssignRoleToUserUseCase.class, useCase);
     }
 }

@@ -15,7 +15,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Collection;
 
 import static java.util.Arrays.stream;
 
@@ -49,8 +48,8 @@ public class LoadUserDetailService implements UserDetailsService {
             DecodedJWT jwt = JWT.decode(authToken);
             String username = jwt.getClaim("username").asString();
             String[] scopes = new String[0];
-            if (!jwt.getClaim("scope").isNull()) {
-                scopes = (String[])jwt.getClaim("scope").asArray(String.class);
+            if (!jwt.getClaim("scope").isMissing()) {
+                scopes = jwt.getClaim("scope").asArray(String.class);
             }
             jwtUser = JwtUser.create(new User(username, "", stream(scopes).map(s -> (GrantedAuthority) () -> s).toList()));
         } catch (Exception var9) {

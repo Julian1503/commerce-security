@@ -1,14 +1,9 @@
 package com.julian.commerceauthsecurity.api.request.role;
 
-import lombok.Getter;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-@Getter
-public class GetRoleByIdRequest {
-    private final UUID roleId;
-
-    public GetRoleByIdRequest(UUID roleId) {
-        this.roleId = roleId;
-    }
+public record GetRoleByIdRequest(
+        @NotNull(message = "id is required") UUID roleId) {
 }

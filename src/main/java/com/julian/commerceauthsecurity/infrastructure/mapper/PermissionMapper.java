@@ -1,7 +1,6 @@
 package com.julian.commerceauthsecurity.infrastructure.mapper;
 
 import com.julian.commerceauthsecurity.domain.models.Permission;
-import com.julian.commerceauthsecurity.domain.valueobject.Name;
 import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceauthsecurity.infrastructure.entity.PermissionEntity;
 import com.julian.commerceshared.repository.Mapper;

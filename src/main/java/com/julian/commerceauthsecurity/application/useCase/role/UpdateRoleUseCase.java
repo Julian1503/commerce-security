@@ -4,7 +4,6 @@ import com.julian.commerceauthsecurity.application.command.role.UpdateRoleComman
 import com.julian.commerceauthsecurity.application.validation.RoleValidation;
 import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.repository.RoleRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.Name;
 import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceshared.repository.UseCase;
 

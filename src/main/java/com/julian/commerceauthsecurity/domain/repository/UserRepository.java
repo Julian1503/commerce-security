@@ -1,7 +1,6 @@
 package com.julian.commerceauthsecurity.domain.repository;
 
 import com.julian.commerceauthsecurity.domain.models.User;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -3,7 +3,10 @@ package com.julian.commerceauthsecurity.application.validation;
 import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceauthsecurity.domain.repository.UserRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.*;
+import com.julian.commerceauthsecurity.domain.valueobject.Avatar;
+import com.julian.commerceauthsecurity.domain.valueobject.Email;
+import com.julian.commerceauthsecurity.domain.valueobject.Password;
+import com.julian.commerceauthsecurity.domain.valueobject.Username;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +20,8 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static util.UserBuilder.createUserWithParams;
 
 class UserValidationTest {

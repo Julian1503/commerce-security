@@ -1,20 +1,12 @@
 package com.julian.commerceauthsecurity.api.request.user;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
+import jakarta.validation.constraints.NotNull;
 
-@Getter
-public class ChangePasswordRequest {
-    @NotBlank(message = "Old password is required")
-    private final String oldPassword;
-    @NotBlank(message = "New password is required")
-    private final String newPassword;
-    @NotBlank(message = "Username is required")
-    private final String username;
-
-    public ChangePasswordRequest(String oldPassword, String newPassword, String username) {
-        this.oldPassword = oldPassword;
-        this.newPassword = newPassword;
-        this.username = username;
-    }
+public record ChangePasswordRequest(@NotBlank(message = "Old password is required")
+                                    @NotNull(message = "Old password is required") String oldPassword,
+                                    @NotBlank(message = "New password is required")
+                                    @NotNull(message = "New password is required") String newPassword,
+                                    @NotBlank(message = "Username is required")
+                                    @NotNull(message = "Username is required") String username) {
 }

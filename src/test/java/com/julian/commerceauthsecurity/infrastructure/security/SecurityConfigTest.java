@@ -1,22 +1,9 @@
 package com.julian.commerceauthsecurity.infrastructure.security;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.mock;
-
 import com.julian.commerceauthsecurity.domain.service.UserDetailsService;
 import com.julian.commerceauthsecurity.infrastructure.implementation.LoadUserDetailService;
 import com.julian.commerceauthsecurity.infrastructure.repository.UserJpaRepository;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
-
-import java.util.List;
-import java.util.Map;
-
-import org.junit.jupiter.api.Disabled;
-
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,6 +25,12 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
 
 @ContextConfiguration(classes = {SecurityConfig.class, AuthenticationEntryPoint.class, JwtDecoder.class})
 @ExtendWith(SpringExtension.class)
@@ -75,12 +68,12 @@ class SecurityConfigTest {
                 new PasswordEncoderConfig());
 
         // Assert
-        assertTrue(actualAuthorizationManagerResult instanceof ProviderManager);
+        assertInstanceOf(ProviderManager.class, actualAuthorizationManagerResult);
         List<AuthenticationProvider> providers = ((ProviderManager) actualAuthorizationManagerResult).getProviders();
         assertEquals(1, providers.size());
         AuthenticationProvider getResult = providers.get(0);
-        assertTrue(getResult instanceof DaoAuthenticationProvider);
-        assertTrue(((DaoAuthenticationProvider) getResult).getUserCache() instanceof NullUserCache);
+        assertInstanceOf(DaoAuthenticationProvider.class, getResult);
+        assertInstanceOf(NullUserCache.class, ((DaoAuthenticationProvider) getResult).getUserCache());
         assertFalse(((DaoAuthenticationProvider) getResult).isForcePrincipalAsString());
         assertTrue(((ProviderManager) actualAuthorizationManagerResult).isEraseCredentialsAfterAuthentication());
         assertTrue(((DaoAuthenticationProvider) getResult).isHideUserNotFoundExceptions());
@@ -107,7 +100,7 @@ class SecurityConfigTest {
                 .getCorsConfiguration(new MockHttpServletRequest());
 
         // Assert
-        assertTrue(actualCorsConfigurationSourceResult instanceof UrlBasedCorsConfigurationSource);
+        assertInstanceOf(UrlBasedCorsConfigurationSource.class, actualCorsConfigurationSourceResult);
         Map<String, CorsConfiguration> corsConfigurations = ((UrlBasedCorsConfigurationSource) actualCorsConfigurationSourceResult)
                 .getCorsConfigurations();
         assertEquals(1, corsConfigurations.size());

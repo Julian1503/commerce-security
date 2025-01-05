@@ -2,7 +2,6 @@ package com.julian.commerceauthsecurity.application.useCase.role;
 
 import com.julian.commerceauthsecurity.application.command.role.CreateRoleCommand;
 import com.julian.commerceauthsecurity.application.validation.RoleValidation;
-import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.repository.RoleRepository;
 import org.junit.jupiter.api.BeforeEach;

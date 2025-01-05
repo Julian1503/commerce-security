@@ -2,12 +2,12 @@ package com.julian.commerceauthsecurity.infrastructure.security;
 
 import com.julian.commerceauthsecurity.domain.service.SecurityContextInterface;
 import com.julian.commerceauthsecurity.domain.service.TokenManager;
+import com.julian.commerceauthsecurity.domain.service.UserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import com.julian.commerceauthsecurity.domain.service.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -33,7 +33,7 @@ public class SecurityContext implements SecurityContextInterface {
   private void setSecurityContext(final String token) {
     UserDetails userDetails = this.userDetailsService.loadUserByUsername(token);
     if (userDetails != null) {
-      UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, (Object)null, userDetails.getAuthorities());
+      UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
       authentication.setDetails(userDetails);
       SecurityContextHolder.getContext().setAuthentication(authentication);
     } else {

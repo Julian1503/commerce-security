@@ -4,10 +4,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.julian.commerceshared.api.response.BaseResponse;
 import com.julian.commerceshared.dto.ErrorMessage;
-
-import java.nio.file.AccessDeniedException;
-import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,9 +16,10 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import java.nio.file.AccessDeniedException;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class SecurityExceptionHandlerTest {
 
@@ -45,7 +42,7 @@ class SecurityExceptionHandlerTest {
 
         // Assert
         HttpStatusCode statusCode = actualHandleBadCredentialsExceptionResult.getStatusCode();
-        assertTrue(statusCode instanceof HttpStatus);
+        assertInstanceOf(HttpStatus.class, statusCode);
         ErrorMessage body = actualHandleBadCredentialsExceptionResult.getBody();
         assertEquals("401 UNAUTHORIZED", body.getCode());
         assertEquals("Bad Credentials", body.getError());
@@ -68,7 +65,7 @@ class SecurityExceptionHandlerTest {
 
         // Assert
         HttpStatusCode statusCode = actualHandleAccessDeniedExceptionResult.getStatusCode();
-        assertTrue(statusCode instanceof HttpStatus);
+        assertInstanceOf(HttpStatus.class, statusCode);
         ErrorMessage body = actualHandleAccessDeniedExceptionResult.getBody();
         assertEquals("403 FORBIDDEN", body.getCode());
         assertEquals("Access denied", body.getCause());
@@ -93,7 +90,7 @@ class SecurityExceptionHandlerTest {
 
         // Assert
         HttpStatusCode statusCode = actualHandleMethodArgumentTypeMismatchExceptionResult.getStatusCode();
-        assertTrue(statusCode instanceof HttpStatus);
+        assertInstanceOf(HttpStatus.class, statusCode);
         ErrorMessage body = actualHandleMethodArgumentTypeMismatchExceptionResult.getBody();
         assertEquals("400 BAD_REQUEST", body.getCode());
         assertEquals("Method Argument Type Mismatch", body.getError());
@@ -117,7 +114,7 @@ class SecurityExceptionHandlerTest {
 
         // Assert
         HttpStatusCode statusCode = actualHandleIllegalArgumentExceptionResult.getStatusCode();
-        assertTrue(statusCode instanceof HttpStatus);
+        assertInstanceOf(HttpStatus.class, statusCode);
         ErrorMessage body = actualHandleIllegalArgumentExceptionResult.getBody();
         assertEquals("400 BAD_REQUEST", body.getCode());
         assertEquals("Illegal Argument", body.getError());
@@ -141,7 +138,7 @@ class SecurityExceptionHandlerTest {
 
         // Assert
         HttpStatusCode statusCode = actualHandleDatabaseExceptionResult.getStatusCode();
-        assertTrue(statusCode instanceof HttpStatus);
+        assertInstanceOf(HttpStatus.class, statusCode);
         ErrorMessage body = actualHandleDatabaseExceptionResult.getBody();
         assertEquals("500 INTERNAL_SERVER_ERROR", body.getCode());
         assertEquals("Fatal error", body.getError());
@@ -165,7 +162,7 @@ class SecurityExceptionHandlerTest {
 
         // Assert
         HttpStatusCode statusCode = actualHandleValidationExceptionResult.getStatusCode();
-        assertTrue(statusCode instanceof HttpStatus);
+        assertInstanceOf(HttpStatus.class, statusCode);
         BaseResponse body = actualHandleValidationExceptionResult.getBody();
         assertEquals("Validation Error", body.getMessage());
         assertNull(body.getResponse());
@@ -190,7 +187,7 @@ class SecurityExceptionHandlerTest {
 
         // Assert
         HttpStatusCode statusCode = actualHandleHttpMessageNotReadableResult.getStatusCode();
-        assertTrue(statusCode instanceof HttpStatus);
+        assertInstanceOf(HttpStatus.class, statusCode);
         BaseResponse body = actualHandleHttpMessageNotReadableResult.getBody();
         List<String> errorResponse = body.getErrorResponse();
         assertEquals(1, errorResponse.size());
@@ -217,7 +214,7 @@ class SecurityExceptionHandlerTest {
 
         // Assert
         HttpStatusCode statusCode = actualHandleGeneralExceptionResult.getStatusCode();
-        assertTrue(statusCode instanceof HttpStatus);
+        assertInstanceOf(HttpStatus.class, statusCode);
         ErrorMessage body = actualHandleGeneralExceptionResult.getBody();
         assertEquals("500 INTERNAL_SERVER_ERROR", body.getCode());
         assertEquals("Internal Server Error", body.getError());

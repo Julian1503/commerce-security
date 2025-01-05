@@ -4,7 +4,6 @@ import com.julian.commerceauthsecurity.api.response.PermissionResponse;
 import com.julian.commerceauthsecurity.api.response.RoleResponse;
 import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.models.Role;
-import com.julian.commerceauthsecurity.domain.valueobject.Name;
 import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceshared.repository.Mapper;
 

@@ -1,16 +1,10 @@
 package com.julian.commerceauthsecurity.api.request.permission;
 
-import lombok.Getter;
-import lombok.NonNull;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-@Getter
-public class GetPermissionByIdRequest {
-    private final UUID id;
-
-    public GetPermissionByIdRequest(@NonNull UUID id) {
-        this.id = id;
-    }
+public record GetPermissionByIdRequest(
+        @NotNull(message = "id is required") UUID id) {
 }
 

@@ -4,7 +4,6 @@ import com.julian.commerceauthsecurity.application.command.role.CreateRoleComman
 import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.repository.RoleRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.Name;
 import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceshared.repository.UseCase;
 

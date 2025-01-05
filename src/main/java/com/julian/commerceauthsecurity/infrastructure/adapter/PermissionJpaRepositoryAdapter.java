@@ -3,15 +3,13 @@ package com.julian.commerceauthsecurity.infrastructure.adapter;
 import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.repository.PermissionRepository;
 import com.julian.commerceauthsecurity.infrastructure.entity.PermissionEntity;
+import com.julian.commerceauthsecurity.infrastructure.repository.PermissionJpaRepository;
 import com.julian.commerceauthsecurity.infrastructure.specification.PermissionSpecification;
 import com.julian.commerceshared.repository.Mapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.julian.commerceauthsecurity.infrastructure.repository.PermissionJpaRepository;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
 import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;

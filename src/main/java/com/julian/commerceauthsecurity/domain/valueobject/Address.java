@@ -1,7 +1,5 @@
 package com.julian.commerceauthsecurity.domain.valueobject;
 
-import com.julian.commerceshared.valueobject.AbstractValueObject;
-
 import java.util.Objects;
 
 public final class Address {

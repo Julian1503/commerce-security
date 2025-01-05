@@ -1,10 +1,8 @@
 package com.julian.commerceauthsecurity.application.useCase.role;
 
 import com.julian.commerceauthsecurity.application.query.role.FilteredRolesQuery;
-import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.models.Role;
 import com.julian.commerceauthsecurity.domain.repository.RoleRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -13,7 +11,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import util.PermissionBuilder;
 import util.RoleBuilder;
 
 import java.util.Collections;

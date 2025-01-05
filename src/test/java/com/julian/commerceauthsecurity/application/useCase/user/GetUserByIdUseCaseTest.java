@@ -3,7 +3,6 @@ package com.julian.commerceauthsecurity.application.useCase.user;
 import com.julian.commerceauthsecurity.application.query.user.GetUserByIdQuery;
 import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceauthsecurity.domain.repository.UserRepository;
-import com.julian.commerceshared.repository.UseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

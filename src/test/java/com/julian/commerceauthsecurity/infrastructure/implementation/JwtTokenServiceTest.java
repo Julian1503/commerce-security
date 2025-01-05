@@ -1,15 +1,14 @@
 package com.julian.commerceauthsecurity.infrastructure.implementation;
 
 import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Appender;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.julian.commerceauthsecurity.configuration.RsaKeys;
 import com.julian.commerceauthsecurity.domain.models.User;
-import com.julian.commerceauthsecurity.domain.service.UserAuthenticationManager;
 import com.julian.commerceauthsecurity.domain.service.RSAKeyProvider;
-import com.julian.commerceauthsecurity.domain.valueobject.Email;
-import com.julian.commerceauthsecurity.domain.valueobject.Username;
+import com.julian.commerceauthsecurity.domain.service.UserAuthenticationManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -18,25 +17,17 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import util.UserBuilder;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
-import java.time.Instant;
-import java.util.*;
-import ch.qos.logback.classic.Logger;
-import util.UserBuilder;
+import java.util.Optional;
 
-import static java.util.Arrays.stream;
-import static java.util.Objects.hash;
-import static org.hibernate.sql.ast.SqlTreeCreationLogger.LOGGER;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 

@@ -19,6 +19,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -45,7 +46,7 @@ public class PermissionController extends BaseController {
     @PreAuthorize("hasPermission('CREATE_PERMISSION')")
     @PostMapping("/create")
     public ResponseEntity<BaseResponse> createPermission(@Valid @RequestBody CreatePermissionRequest request) {
-        CreatePermissionCommand createPermissionCommand = new CreatePermissionCommand(request.getName());
+        CreatePermissionCommand createPermissionCommand = new CreatePermissionCommand(request.name());
         UUID permissionId = createPermissionUseCase.execute(createPermissionCommand);
         return createSuccessResponse(permissionId, "Permission was created successfully");
     }
@@ -61,25 +62,25 @@ public class PermissionController extends BaseController {
 
     @PreAuthorize("hasPermission('GET_PERMISSION_BY_ID')")
     @GetMapping("/get-by-id/{id}")
-    public ResponseEntity<BaseResponse> getPermissionById(@Valid @ModelAttribute GetPermissionByIdRequest getPermissionByIdRequest) {
-        GetPermissionByIdQuery getPermissionByIdQuery = new GetPermissionByIdQuery(getPermissionByIdRequest.getId());
+    public ResponseEntity<BaseResponse> getPermissionById(@Validated @ModelAttribute GetPermissionByIdRequest getPermissionByIdRequest) {
+        GetPermissionByIdQuery getPermissionByIdQuery = new GetPermissionByIdQuery(getPermissionByIdRequest.id());
         Permission permission = getPermissionByIdUseCase.execute(getPermissionByIdQuery);
         return createSuccessResponse(permissionMapper.toSource(permission), "Permission returned successfully");
     }
 
     @PreAuthorize("hasPermission('UPDATE_PERMISSION')")
     @PutMapping("/update")
-    public ResponseEntity<BaseResponse> updatePermission(@Valid @RequestBody UpdatePermissionRequest updatePermissionRequest) {
-        UpdatePermissionCommand updatePermissionCommand = new UpdatePermissionCommand(updatePermissionRequest.getId(), updatePermissionRequest.getName());
+    public ResponseEntity<BaseResponse> updatePermission(@Validated @RequestBody UpdatePermissionRequest updatePermissionRequest) {
+        UpdatePermissionCommand updatePermissionCommand = new UpdatePermissionCommand(updatePermissionRequest.id(), updatePermissionRequest.name());
         Permission permission = updatePermissionUseCase.execute(updatePermissionCommand);
-        return createSuccessResponse(permission, "Permission was updated successfully");
+        return createSuccessResponse(permissionMapper.toSource(permission), "Permission was updated successfully");
     }
 
     @PreAuthorize("hasPermission('DELETE_PERMISSION')")
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<BaseResponse> deletePermission(@RequestParam  DeletePermisssionRequest deletePermissionRequest) {
-        DeletePermissionCommand deletePermissionCommand = new DeletePermissionCommand(deletePermissionRequest.getId());
-        Permission permission = deletePermissionUseCase.execute(deletePermissionCommand);
+    @DeleteMapping("/delete")
+    public ResponseEntity<BaseResponse> deletePermission(@Validated @RequestBody DeletePermissionRequest request) {
+        DeletePermissionCommand command = new DeletePermissionCommand(request.id());
+        Permission permission = deletePermissionUseCase.execute(command);
         return createSuccessResponse(permissionMapper.toSource(permission), "Permission was deleted successfully");
     }
 }

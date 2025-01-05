@@ -1,10 +1,8 @@
 package com.julian.commerceauthsecurity.application.useCase.user;
 
 import com.julian.commerceauthsecurity.application.command.user.DeleteUserCommand;
-import com.julian.commerceauthsecurity.application.useCase.user.DeleteUserUseCase;
 import com.julian.commerceauthsecurity.domain.models.User;
 import com.julian.commerceauthsecurity.domain.repository.UserRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

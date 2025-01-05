@@ -7,7 +7,9 @@ import com.julian.commerceauthsecurity.domain.valueobject.Username;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -86,9 +88,9 @@ class UserTest {
         User user1 = User.create(userId, avatar, username, password, email, roles);
         User user2 = User.create(userId, avatar, username, password, email, roles);
         assertEquals(user1, user2);
-        assertFalse(user1.equals(new Object()));
-        assertFalse(user1.equals(null));
-        assertTrue(user1.equals(user1));
+        assertNotEquals(user1, new Object());
+        assertNotEquals(null, user1);
+        assertEquals(user1, user1);
         assertEquals(user1.hashCode(), user2.hashCode());
 
         User user3 = User.create(UUID.randomUUID(), avatar, username, password, email, roles);

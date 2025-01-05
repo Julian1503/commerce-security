@@ -2,15 +2,12 @@ package com.julian.commerceauthsecurity.application.validation;
 
 import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.repository.PermissionRepository;
-import com.julian.commerceauthsecurity.domain.valueobject.Name;
-import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import org.junit.jupiter.api.Test;
 import util.PermissionBuilder;
 
-import java.util.UUID;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PermissionValidationTest {
 

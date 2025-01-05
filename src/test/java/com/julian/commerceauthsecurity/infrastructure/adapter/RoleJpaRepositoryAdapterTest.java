@@ -1,8 +1,6 @@
 package com.julian.commerceauthsecurity.infrastructure.adapter;
 
-import com.julian.commerceauthsecurity.domain.models.Permission;
 import com.julian.commerceauthsecurity.domain.models.Role;
-import com.julian.commerceauthsecurity.domain.valueobject.SecurityName;
 import com.julian.commerceauthsecurity.infrastructure.entity.RoleEntity;
 import com.julian.commerceauthsecurity.infrastructure.repository.RolesJpaRepository;
 import com.julian.commerceshared.repository.Mapper;
@@ -20,8 +18,10 @@ import util.RoleBuilder;
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyCollection;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 class RoleJpaRepositoryAdapterTest {
 

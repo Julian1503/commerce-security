@@ -11,7 +11,7 @@ import com.julian.commerceshared.api.response.BaseResponse;
 import com.julian.commerceshared.repository.Mapper;
 import com.julian.commerceshared.repository.UseCase;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
@@ -19,7 +19,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.data.web.PagedResourcesAssembler;
 
 import java.util.UUID;
 
@@ -65,7 +64,7 @@ public class UserController extends BaseController {
     @PreAuthorize("hasPermission('GET_USER_BY_ID')")
     @GetMapping("/get-by-id/{userId}")
     public ResponseEntity<BaseResponse> getUser(@ModelAttribute GetUserByIdRequest request) {
-        GetUserByIdQuery query = new GetUserByIdQuery(request.getId());
+        GetUserByIdQuery query = new GetUserByIdQuery(request.id());
         User user = getUserByIdUseCase.execute(query);
         UserResponse userResponse = userMapper.toSource(user);
         return createSuccessResponse(userResponse, "User was found successfully");
@@ -95,9 +94,9 @@ public class UserController extends BaseController {
     public ResponseEntity<BaseResponse> changePassword(@Validated @RequestBody ChangePasswordRequest changePasswordRequest) {
         ResponseEntity<BaseResponse> baseResponse;
         ChangePasswordCommand changePasswordCommand = new ChangePasswordCommand(
-                changePasswordRequest.getUsername(),
-                changePasswordRequest.getOldPassword(),
-                changePasswordRequest.getNewPassword()
+                changePasswordRequest.username(),
+                changePasswordRequest.oldPassword(),
+                changePasswordRequest.newPassword()
         );
         boolean isSuccesful = changePasswordUseCase.execute(changePasswordCommand);
         if (isSuccesful) {
@@ -112,10 +111,10 @@ public class UserController extends BaseController {
     @PutMapping("/update")
     public ResponseEntity<BaseResponse> updateUser(@Validated @RequestBody UpdateUserRequest request) {
         UpdateUserCommand updateUserCommand = new UpdateUserCommand(
-                request.getId(),
-                request.getUsername(),
-                request.getEmail(),
-                request.getAvatar()
+                request.id(),
+                request.username(),
+                request.email(),
+                request.avatar()
         );
         User userUpdated = updateUserUseCase.execute(updateUserCommand);
         return createSuccessResponse(userMapper.toSource(userUpdated), "User was updated successfully");
@@ -125,17 +124,17 @@ public class UserController extends BaseController {
     @PutMapping("/assign-role")
     public ResponseEntity<BaseResponse> assignRoleToUser(@Validated @RequestBody AssignRoleToUserRequest request) {
         AssignRoleToUserCommand assignRoleToUserCommand = new AssignRoleToUserCommand(
-                request.getUserId(),
-                request.getRoleIds()
+                request.userId(),
+                request.roleIds()
         );
         Boolean assignedCorrectly = assignRoleToUserUseCase.execute(assignRoleToUserCommand);
         return createSuccessResponse(assignedCorrectly, "Role was assigned to user successfully");
     }
 
     @PreAuthorize("hasPermission('DELETE_USER')")
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<BaseResponse> deleteUser(DeleteUserRequest request) {
-        DeleteUserCommand deleteUserCommand = new DeleteUserCommand(request.getId());
+    @DeleteMapping("/delete")
+    public ResponseEntity<BaseResponse> deleteUser(@Validated @RequestBody DeleteUserRequest request) {
+        DeleteUserCommand deleteUserCommand = new DeleteUserCommand(request.id());
         User userDeleted = deleteUserUseCase.execute(deleteUserCommand);
         return createSuccessResponse(userMapper.toSource(userDeleted), "User was deleted successfully");
     }

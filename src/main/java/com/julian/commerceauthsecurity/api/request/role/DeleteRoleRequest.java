@@ -1,14 +1,9 @@
 package com.julian.commerceauthsecurity.api.request.role;
 
-import lombok.Getter;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.UUID;
 
-@Getter
-public class DeleteRoleRequest {
-    private final UUID id;
-
-    public DeleteRoleRequest(UUID id) {
-        this.id = id;
-    }
+public record DeleteRoleRequest(
+        @NotNull(message = "id is required") UUID id) {
 }
